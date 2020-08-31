@@ -1,0 +1,22 @@
+#
+# This file is custom additional setting
+#
+
+[client]
+# Default is Latin1, if you need UTF-8 set this (also in server section)
+default-character-set = utf8mb4
+
+[mysqld]
+
+#
+# * Basic Settings
+#
+autocommit  = 1
+skip-name-resolve
+lower_case_table_names = 1
+
+#
+# * Character sets
+#
+character-set-server  = utf8mb4
+collation-server      = utf8mb4_general_ci

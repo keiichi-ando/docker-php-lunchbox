@@ -1,0 +1,26 @@
+version: '3.1'
+
+services: 
+  php:
+    build: ./web
+    ports: 
+      - 8000:80
+      - 9000:9000
+    environment: 
+      TZ: Asia/Tokyo
+    volumes: 
+      - ./volume:/var/www
+    tty: true
+
+  db:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db/mariadb/:/etc/mysql/conf.d
+      - ./db/init/:/docker-entrypoint-initdb.d
+      - ./db/var/:/var/usr/tmp
+    environment: 
+      MYSQL_ROOT_PASSWORD: P@ssw0rd
+      TZ: Asia/Tokyo
+  
