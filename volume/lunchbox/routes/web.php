@@ -24,3 +24,7 @@ Route::get('/test', function () {
 Route::get('/test/json', function () {
     return ['Hello laravel world', 1,2,3];
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
