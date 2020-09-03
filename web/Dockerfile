@@ -2,8 +2,7 @@ FROM php:apache-buster
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    && apt-get install -y libzip-dev libicu-dev unzip git \
-    && docker-php-ext-install mysqli \
+    && apt-get install -y libzip-dev libicu-dev unzip git nodejs \
     # clean up
     && apt-get autoremove -y \
     && apt-get clean -y
@@ -32,6 +31,6 @@ RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
     && docker-php-ext-install mysqli zip intl
 
 # -- npm --
-RUN curl -L https://www.npmjs.com/install.sh | sh
+RUN curl -L https://www.npmjs.com/install.sh | bash
 
 EXPOSE 80 9000
