@@ -17,9 +17,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/vue', function () {
+    return view('dev-vue');
+});
+
+Route::get("/api/sample", function(){
+    return ["name" => "Vue"];
+});
+
 Route::get('/test', function () {
     return 'Hello laravel world';
 });
+
 
 Route::get('/test/json', function () {
     return ['Hello laravel world', 1,2,3];
