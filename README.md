@@ -4,8 +4,8 @@ Docker template
 
 ## include
 
-- [php:apache-buster](https://hub.docker.com/layers/php/library/php/apache-buster/images/sha256-de0cf026c47735646737b393bb14a143c1aebf552f04055df0f44014b105796b?context=explore)
-- [Laravel - ウェブ職人のためのPHPフレームワーク](http://laravel.jp/)
+-   [php:apache-buster](https://hub.docker.com/layers/php/library/php/apache-buster/images/sha256-de0cf026c47735646737b393bb14a143c1aebf552f04055df0f44014b105796b?context=explore)
+-   [Laravel - ウェブ職人のための PHP フレームワーク](http://laravel.jp/)
 
 ## setting
 
@@ -21,13 +21,13 @@ chown -R www-data:www-data database
 
 `config/app.php`
 
-- タイムゾーンを変更: 'timezone' => 'UTC' -> 'timezone' => 'Asia/Tokyo',
-- ロケール変更: 'locale' => 'en' -> 'locale' => 'ja',
+- タイムゾーンを変更: 'timezone' => 'UTC' -> 'timezone' => 'Asia/Tokyo'
+- ロケール変更: 'locale' => 'en' -> 'locale' => 'ja'
 
 ## ログイン (auth) 追加、加工
 
-- [Laravelでログイン機能を実装する](https://qiita.com/ucan-lab/items/bd0d6f6449602072cb87)
-- [Laravel入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-l)
+- [Laravel でログイン機能を実装する](https://qiita.com/ucan-lab/items/bd0d6f6449602072cb87)
+- [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-l)
 
 ```bash: DB migrate time error No.1
 
@@ -36,7 +36,7 @@ chown -R www-data:www-data database
  > database/migrations/???_update_user_table.php
  >（修正前） $table->string('fullname');
  >（修正後） $table->string('fullname')->default('empty name');
- ```
+```
 
 ```bash: DB migrate time error No.2
 
@@ -45,4 +45,20 @@ chown -R www-data:www-data database
  > database/migrations/???_update_user_table.php
  >（修正前） $table->string('fullname')->default('empty name');
  >（修正後） # $table->string('fullname')->default('empty name'); // コメントアウトして実行をパスさせる　（一回実行ずみのため）
- ```
+```
+
+## Vue
+
+laravel-mix
+
+[Laravel7 から Vue.js を使う最短レシピ - Qiita](https://qiita.com/fruitriin/items/118c773b045101db7651)
+
+未 [Laravel 6 API と Vue.js で SPA 構築 最速入門](https://noumenon-th.net/programming/2020/02/13/laravel-vue-spa/)
+未 [laravel で vue.js , axios を使う](https://qiita.com/ma7ma7pipipi/items/d58b1a8114f122bf918d)
+
+未 [Vue-cropper.js で画像トリミング機能実装](https://www.koatech.info/blog/vue-cropper-js-intro/)
+未 [vue-cropper で画像のトリミングをする - だいそんブログ](https://dkdk0125.work/vue-cropper%E3%81%A7%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%88%E3%83%AA%E3%83%9F%E3%83%B3%E3%82%B0%E3%82%92%E3%81%99%E3%82%8B/)
+
+## DB
+
+[Laravel のマイグレーションで、テーブルを新規作成する - YoheiM.NET](https://www.yoheim.net/blog.php?q=20180506)
