@@ -1944,7 +1944,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    test: String
+  },
   mounted: function mounted() {
     var _this = this;
 
@@ -1973,7 +1977,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      name: window.data.name
+      name: ""
     };
   }
 });
@@ -38331,10 +38335,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _vm._v(
-              "\n                    I'm an example component. " +
-                _vm._s(_vm.name) +
-                "\n                "
-            )
+              "\n                    I'm an example component. \n                     "
+            ),
+            _c("div", [_vm._v(_vm._s(_vm.name))])
           ])
         ])
       ])

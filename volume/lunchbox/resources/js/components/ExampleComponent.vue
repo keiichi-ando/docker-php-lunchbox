@@ -6,7 +6,8 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component. {{ name }}
+                        I'm an example component. 
+                         <div>{{ name }}</div>
                     </div>
                 </div>
             </div>
@@ -16,6 +17,7 @@
 
 <script>
 export default {
+  props: { test: String, },
   async mounted() {
     console.log("Component mounted.");
     const ret = await window.axios.get("/api/sample")
@@ -24,7 +26,7 @@ export default {
   },
   data() {
     return {
-      name: window.data.name
+      name: ""
     };
   }
 };
