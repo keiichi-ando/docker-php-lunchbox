@@ -22,9 +22,6 @@ Route::get('/vue', function () {
 });
 
 Route::get("/api/sample", function () {
-    for ($i=0;$i++;$i<4) {
-        // if (date('W'))
-    }
     $g = new DateTime();
     foreach(range(0, 27) as $i){
         $g->setISODate(date('Y'), date('W'), $i);

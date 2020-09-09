@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     <style>
             html, body {
                 background-color: #fff;
@@ -78,7 +78,7 @@
                 </div>
             @endif -->
         <div class="content">
-            <div class="title m-b-md"> Vue develop </div>
+            <div class="title m-b-md"> Lunch Box (Vue-dev)</div>
             <!-- <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
@@ -94,7 +94,7 @@
     <div id="app">
         <example-component></example-component>
     </div>
-    <script src="{{ mix('js/app.js') }}">
+    <script src="{{ mix('/js/app.js') }}">
     </script>
 </body>
 </html>
