@@ -60,6 +60,19 @@ laravel-mix
 
 - 未[【Laravel 6 & PHP 7.4 対応】Vue + Vue Router + Vuex + Laravel チュートリアル（全16回）を書きました。- Qiita](https://qiita.com/MasahiroHarada/items/2597bd6973a45f92e1e8)
 
+## Laravel Mix
+
+webのルートフォルダを public から変更する
+
+```bootstrap/app.php
+// 追加 (ex. change to public_html)
+$app->bind('path.public', function () {
+    return base_path("public_html");
+});
+```
+
+参考[Laravel5.7メモ：publicをpublic_htmlにリネームしたい - note](https://note.com/watarunakayama/n/n16efb005ef6e)
+
 ## DB
 
 [Laravel のマイグレーションで、テーブルを新規作成する - YoheiM.NET](https://www.yoheim.net/blog.php?q=20180506)
