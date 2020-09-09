@@ -1945,10 +1945,29 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    test: String
-  },
   mounted: function mounted() {
     var _this = this;
 
@@ -1966,8 +1985,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               ret = _context.sent;
               console.log(ret.data);
               _this.name = ret.data.name;
+              _this.calendar = ret.data.calendar;
 
-            case 6:
+            case 7:
             case "end":
               return _context.stop();
           }
@@ -1977,8 +1997,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      name: ""
+      name: "",
+      calendar: []
     };
+  },
+  filters: {
+    shortdate: function shortdate(value) {
+      if (!value) return '';
+      value = value.toString();
+      return value.substr(5);
+    },
+    imagesrc: function imagesrc(value) {
+      if (!value) return '';
+      var date = new Date(value);
+      if (date == NaN) return '';
+      var mm = date.getMonth() + 1;
+      var dd = date.getDate();
+      mm = ('0' + mm).slice(-2);
+      dd = ('0' + dd).slice(-2);
+      return '/assets/images/' + mm + dd + '.png';
+    }
   }
 });
 
@@ -38334,17 +38372,75 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _vm._v(
-              "\n                    I'm an example component. \n                     "
-            ),
-            _c("div", [_vm._v(_vm._s(_vm.name))])
+            _vm._v("\n          I'm an example component.\n          "),
+            _c("div", [_vm._v(_vm._s(_vm.name))]),
+            _vm._v(" "),
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.calendar, function(week) {
+                  return _c(
+                    "tr",
+                    { key: week },
+                    _vm._l(week, function(day) {
+                      return _c("td", { key: day }, [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(_vm._f("shortdate")(day)) +
+                            "\n                    "
+                        ),
+                        _c("div", [
+                          _c(
+                            "a",
+                            { attrs: { href: _vm._f("imagesrc")(day) } },
+                            [
+                              _c("img", {
+                                staticClass: "img-fluid img-thumbnail",
+                                attrs: { src: _vm._f("imagesrc")(day) }
+                              })
+                            ]
+                          )
+                        ])
+                      ])
+                    }),
+                    0
+                  )
+                }),
+                0
+              )
+            ])
           ])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "text-center" }, [
+      _c("tr", [
+        _c("td", { staticStyle: { color: "maloon" } }, [_vm._v("日")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("月")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("火")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("水")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("木")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("金")]),
+        _vm._v(" "),
+        _c("td", { staticStyle: { color: "bule" } }, [_vm._v("土")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
