@@ -1966,7 +1966,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
@@ -1995,10 +1994,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }, _callee);
     }))();
   },
+  methods: {
+    replaceByDefault: function replaceByDefault(e) {
+      return e.target.src = '/assets/images/fallback.png';
+    }
+  },
   data: function data() {
     return {
       name: "",
-      calendar: []
+      calendar: [],
+      imgobj: {
+        fallbacksrc: "/assets/images/fallback.jpg"
+      }
     };
   },
   filters: {
@@ -38365,14 +38372,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-10" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("Example Component")
+            _vm._v("Lunch Menu (Example)")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _vm._v("\n          I'm an example component.\n          "),
             _c("div", [_vm._v(_vm._s(_vm.name))]),
             _vm._v(" "),
             _c("table", { staticClass: "table" }, [
@@ -38398,7 +38404,8 @@ var render = function() {
                             [
                               _c("img", {
                                 staticClass: "img-fluid img-thumbnail",
-                                attrs: { src: _vm._f("imagesrc")(day) }
+                                attrs: { src: _vm._f("imagesrc")(day) },
+                                on: { error: _vm.replaceByDefault }
                               })
                             ]
                           )

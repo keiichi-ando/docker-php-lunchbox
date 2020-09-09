@@ -1,12 +1,11 @@
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-10">
         <div class="card">
-          <div class="card-header">Example Component</div>
+          <div class="card-header">Lunch Menu (Example)</div>
 
           <div class="card-body">
-            I'm an example component.
             <div>{{ name }}</div>
 
             <table class="table">
@@ -25,7 +24,7 @@
                 <tr v-for="week in calendar" :key="week">
                   <td v-for="day in week" :key="day">
                       {{ day | shortdate }}
-                      <div><a :href="day|imagesrc"><img class="img-fluid img-thumbnail" :src="day|imagesrc"></a></div>
+                      <div><a :href="day|imagesrc"><img class="img-fluid img-thumbnail" :src="day|imagesrc" @error="replaceByDefault"></a></div>
                   </td>
                 </tr>
               </tbody>
@@ -46,10 +45,16 @@ export default {
     this.name = ret.data.name;
     this.calendar = ret.data.calendar;
   },
+  methods: {
+    replaceByDefault(e) {
+      return e.target.src = '/assets/images/fallback.png';
+    }
+  },
   data() {
     return {
       name: "",
       calendar: [],
+      imgobj: {fallbacksrc:"/assets/images/fallback.jpg" }
     };
   },
   filters:{
