@@ -37,7 +37,8 @@
         "ms-vscode-remote.vscode-remote-extensionpack",
         "firefox-devtool.vscode-firefox-debug",
         "junstyle.php-cs-fixer",
-        "neilbrayfield.php-docblocker"
+        "neilbrayfield.php-docblocker",
+        "octref.vetur"
     ]
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
