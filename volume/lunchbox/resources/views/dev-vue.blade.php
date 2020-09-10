@@ -9,61 +9,66 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}">
     <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 80vh;
-                margin: 0;
-            }
+        html,
+        body {
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 200;
+            height: 80vh;
+            margin: 0;
+        }
 
-            .full-height {
-                height: 80vh;
-            }
+        .full-height {
+            height: 80vh;
+        }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+        .flex-center {
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
 
-            .position-ref {
-                position: relative;
-            }
+        .position-ref {
+            position: relative;
+        }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+        .top-right {
+            position: absolute;
+            right: 10px;
+            top: 18px;
+        }
 
-            .content {
-                text-align: center;
-            }
+        .content {
+            text-align: center;
+        }
 
-            .title {
-                font-size: 84px;
-            }
+        .title {
+            font-size: 84px;
+        }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+        .links>a {
+            color: #636b6f;
+            padding: 0 25px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .1rem;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        .m-b-md {
+            margin-bottom: 30px;
+        }
+    </style>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
     <div class="flex-center position-ref full-height">
+        <noscript>
+            <strong>We're sorry but vue-application doesn't work properly without JavaScript enabled. Please enable it
+                to continue.</strong>
+        </noscript>
         <!-- @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -78,7 +83,7 @@
                 </div>
             @endif -->
         <div class="content">
-            <div class="title m-b-md"> Lunch Box (Vue-dev)</div>
+            <!-- <div class="title m-b-md"> Lunch Box (Vue-dev)</div> -->
             <!-- <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
@@ -89,12 +94,12 @@
                     <a href="https://vapor.laravel.com">Vapor</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div> -->
+            <!-- </div> -->
         </div>
-    </div>
-    <div id="app">
-        <example-component></example-component>
-    </div>
-    <script src="{{ mix('/js/app.js') }}">
-    </script>
+        <div id="app">
+            <example-component></example-component>
+        </div>
+        <script src="{{ mix('/js/app.js') }}">
+        </script>
 </body>
 </html>
