@@ -27,7 +27,7 @@ chown -R www-data:www-data database
 ## ログイン (auth) 追加、加工
 
 - [Laravel でログイン機能を実装する](https://qiita.com/ucan-lab/items/bd0d6f6449602072cb87)
-- [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-l)
+- [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-login/)
 
 ```bash: DB migrate time error No.1
 

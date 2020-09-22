@@ -17,33 +17,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/vue', function () {
-    return view('dev-vue');
-});
+Route::get('/users', 'App\Http\Controllers\UserController@index');
 
-Route::get("/api/sample", function () {
-    $g = new DateTime();
-    foreach(range(0, 27) as $i){
-        $g->setISODate(date('Y'), date('W'), $i);
-        $date[] = $g->format('Y-m-d');
-    }
-    $array[0] = array_slice($date, 0, 7); //1週目
-    $array[1] = array_slice($date, 7, 7); // 2週目
-    $array[2] = array_slice($date, 14, 7);; // 3週目
-    $array[3] = array_slice($date, 21); // 4週目
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return Inertia\Inertia::render('Dashboard');
+})->name('dashboard');
 
-    return ["name" => "Vue", "calendar"=> $array];
-});
-
-Route::get('/test', function () {
-    return 'Hello laravel world';
-});
-
-
-Route::get('/test/json', function () {
-    return ['Hello laravel world', 1,2,3];
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/lunch', function () {
+    return Inertia\Inertia::render('LunchMenu');
+})->name('lunchmenu');
