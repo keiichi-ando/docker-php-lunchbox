@@ -3522,28 +3522,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var ret;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              console.log("Component mounted.");
+              _this.clearMessages();
+
               _context.next = 3;
-              return window.axios.get("/api/calendar");
+              return window.axios.get("/api/calendar").then(function (res) {
+                console.log(res.data);
+
+                if ("error" in res.data) {
+                  _this.setErrMessages(res.error);
+
+                  return;
+                }
+
+                _this.name = res.data.name;
+                _this.calendar = res.data.calendar;
+              })["catch"](function (err) {
+                console.log(err);
+
+                _this.setErrMessages(err.message);
+              });
 
             case 3:
-              ret = _context.sent;
-              console.log(ret.data);
-              _this.name = ret.data.name;
-              _this.calendar = ret.data.calendar;
-
-            case 7:
             case "end":
               return _context.stop();
           }
@@ -3554,6 +3572,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   methods: {
     replaceByDefault: function replaceByDefault(e) {
       return e.target.src = "/assets/images/fallback.png";
+    },
+    setErrMessages: function setErrMessages(msg) {
+      this.messages.err.push(msg);
+    },
+    setMessages: function setMessages(msg) {
+      this.messages.info.push(msg);
+    },
+    clearMessages: function clearMessages() {
+      this.messages = {
+        info: [],
+        err: []
+      };
+    },
+    test: function test() {
+      var _this2 = this;
+
+      console.log("call test");
+      window.axios.get("/api/user").then(function (res) {
+        console.log(res);
+      })["catch"](function (err) {
+        _this2.setErrMessages(err);
+      });
     }
   },
   data: function data() {
@@ -3562,6 +3602,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       calendar: [],
       imgobj: {
         fallbacksrc: "/assets/images/fallback.jpg"
+      },
+      messages: {
+        info: [],
+        err: []
       }
     };
   },
@@ -45352,7 +45396,7 @@ var render = function() {
             _vm._v("Lunch Menu (Example)")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-body p-0" }, [
             _c("div", [_vm._v(_vm._s(_vm.name))]),
             _vm._v(" "),
             _c("table", { staticClass: "table" }, [
@@ -45395,6 +45439,57 @@ var render = function() {
           ])
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "span",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.messages.err[0] == "",
+              expression: "!messages.err[0] == ''"
+            }
+          ],
+          staticClass: "alert alert-warning"
+        },
+        _vm._l(_vm.messages.err, function(message, index) {
+          return _c("div", { key: index }, [_vm._v(_vm._s(message))])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c(
+        "span",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: !_vm.messages.info[0] == "",
+              expression: "!messages.info[0] == ''"
+            }
+          ],
+          staticClass: "alert alert-info"
+        },
+        _vm._l(_vm.messages.info, function(message, index) {
+          return _c("div", { key: index }, [_vm._v(_vm._s(message))])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "btn btn-info",
+        attrs: { type: "button" },
+        on: {
+          click: function($event) {
+            return _vm.test()
+          }
+        }
+      }),
+      _vm._v("ボタン")
     ])
   ])
 }
@@ -60659,14 +60754,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./resources/js/Pages/LunchMenu.vue ***!
   \******************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _LunchMenu_vue_vue_type_template_id_36146860___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./LunchMenu.vue?vue&type=template&id=36146860& */ "./resources/js/Pages/LunchMenu.vue?vue&type=template&id=36146860&");
 /* harmony import */ var _LunchMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LunchMenu.vue?vue&type=script&lang=js& */ "./resources/js/Pages/LunchMenu.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _LunchMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _LunchMenu_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -60696,7 +60792,7 @@ component.options.__file = "resources/js/Pages/LunchMenu.vue"
 /*!*******************************************************************!*\
   !*** ./resources/js/Pages/LunchMenu.vue?vue&type=script&lang=js& ***!
   \*******************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

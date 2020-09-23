@@ -29,5 +29,5 @@ Route::get("/calendar", function () {
     $array[2] = array_slice($date, 14, 7);; // 3週目
     $array[3] = array_slice($date, 21); // 4週目
 
-    return ["name" => "Vue", "calendar"=> $array];
+    return ["name" => "Vue", "calendar"=> $array, 'auth'=>Auth::check()];
 });

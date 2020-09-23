@@ -8,19 +8,19 @@
         <div class="card">
           <div class="card-header">Lunch Menu (Example)</div>
 
-          <div class="card-body">
+          <div class="card-body p-0">
             <div>{{ name }}</div>
 
             <table class="table">
               <thead class="text-center">
                 <tr>
-                  <td style="color: maloon;">日</td>
+                  <td style="color: maloon">日</td>
                   <td>月</td>
                   <td>火</td>
                   <td>水</td>
                   <td>木</td>
                   <td>金</td>
-                  <td style="color: bule;">土</td>
+                  <td style="color: bule">土</td>
                 </tr>
               </thead>
               <tbody>
@@ -28,10 +28,10 @@
                   <td v-for="day in week" :key="day">
                     {{ day | shortdate }}
                     <div>
-                      <a :href="day|imagesrc">
+                      <a :href="day | imagesrc">
                         <img
                           class="img-fluid img-thumbnail"
-                          :src="day|imagesrc"
+                          :src="day | imagesrc"
                           @error="replaceByDefault"
                         />
                       </a>
@@ -44,6 +44,15 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <span v-show="!messages.err[0] == ''" class="alert alert-warning" >
+        <div v-for="(message,index) in messages.err" :key="index">{{ message }}</div>
+      </span>
+      <span v-show="!messages.info[0] == ''" class="alert alert-info">
+        <div v-for="(message,index) in messages.info" :key="index">{{ message }}</div>
+      </span>
+      <input class="btn btn-info" type="button" v-on:click="test()">ボタン</div>
+    </div>
   </div>
 </template>
 
@@ -52,15 +61,47 @@ import AppLayout from "./../Layouts/AppLayout";
 
 export default {
   async mounted() {
-    console.log("Component mounted.");
-    const ret = await window.axios.get("/api/calendar");
-    console.log(ret.data);
-    this.name = ret.data.name;
-    this.calendar = ret.data.calendar;
+    this.clearMessages();
+
+    await window.axios
+      .get("/api/calendar")
+      .then((res) => {
+        console.log(res.data);
+        if ("error" in res.data) {
+          this.setErrMessages(res.error);
+          return;
+        }
+        this.name = res.data.name;
+        this.calendar = res.data.calendar;
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setErrMessages(err.message);
+      });
   },
   methods: {
     replaceByDefault(e) {
       return (e.target.src = "/assets/images/fallback.png");
+    },
+    setErrMessages(msg) {
+      this.messages.err.push(msg);
+    },
+    setMessages(msg) {
+      this.messages.info.push(msg);
+    },
+    clearMessages() {
+      this.messages = { info: [], err: [] };
+    },
+    test() {
+      console.log("call test");
+      window.axios
+        .get("/api/user")
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          this.setErrMessages(err);
+        });
     },
   },
   data() {
@@ -68,6 +109,7 @@ export default {
       name: "",
       calendar: [],
       imgobj: { fallbacksrc: "/assets/images/fallback.jpg" },
+      messages: { info: [], err: [] },
     };
   },
   filters: {
