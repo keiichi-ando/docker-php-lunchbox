@@ -28,6 +28,8 @@ chown -R www-data:www-data database
 
 - [Laravel でログイン機能を実装する](https://qiita.com/ucan-lab/items/bd0d6f6449602072cb87)
 - [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-login/)
+- [Laravel（API）でCookieを使ったセッション管理を有効にする](https://deha.co.jp/magazine/admin-laravel-nuxt-cookie-auth/#Cookie)
+- [Laravel でユーザー認証されている時のユーザー情報の値のとり方や、判定する関数など - memocarilog](https://memocarilog.info/php-mysql/8749)
 
 ```bash: DB migrate time error No.1
 
