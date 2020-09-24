@@ -9,7 +9,7 @@
           <div class="card-header">Lunch Menu (Example)</div>
 
           <div class="card-body p-0">
-            <div>{{ name }}</div>
+            <div>for : {{ name }}</div>
 
             <table class="table">
               <thead class="text-center">
@@ -25,15 +25,16 @@
               </thead>
               <tbody>
                 <tr v-for="(week, index) in calendar" :key="index">
-                  <td v-for="day in week" :key="day">
-                    {{ day | shortdate }}
-                    <div>
-                      <a :href="day | imagesrc">
+                  <td v-for="day in week" :key="day.date">
+                    {{ day.date | shortdate }}
+                    <div :class="imgcon(day.can_change)">
+                      <a :href="day.date | imagesrc">
                         <img
-                          class="img-fluid img-thumbnail"
-                          :src="day | imagesrc"
+                          class="img-fluid img-thumbnail img"
+                          :src="day.date | imagesrc"
                           @error="replaceByDefault"
                         />
+                        <div v-show="!day.can_change" class="textoverlay"> 済 </div>
                       </a>
                     </div>
                   </td>
@@ -61,10 +62,11 @@ import AppLayout from "./../Layouts/AppLayout";
 
 export default {
   async mounted() {
+    console.log(this.$style);
     this.clearMessages();
 
     await window.axios
-      .get("/api/calendar")
+      .get("/api/order")
       .then((res) => {
         console.log(res.data);
         if ("error" in res.data) {
@@ -92,6 +94,13 @@ export default {
     clearMessages() {
       this.messages = { info: [], err: [] };
     },
+    imgcon(v) {
+      if (v) {
+        return "";
+      }
+      return "imgcontainer";
+    },
+
     test() {
       console.log("call test");
       window.axios
@@ -136,3 +145,17 @@ export default {
   },
 };
 </script>
+<style scoped>
+.imgcontainer {
+  position: relative;
+  text-align: center;
+}
+.textoverlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: red;
+}
+</style>
