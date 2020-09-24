@@ -62,7 +62,7 @@
             "@php artisan key:generate --ansi"
         ],
         "test":[
-            "vendor/bin/phpunit --colors=always"
+            "vendor/bin/phpunit --colors=always --testdox"
         ]
     }
 }
