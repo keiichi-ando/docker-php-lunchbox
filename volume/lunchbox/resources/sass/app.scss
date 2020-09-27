@@ -1,8 +1,19 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+$body-bg: #eee;
+$body-color: #111111;
 
-// Variables
-@import 'variables';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// Bootstrap and its default variables
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/card";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/images";
+// @import 'node_modules/bootstrap/scss/bootstrap';
