@@ -40,7 +40,7 @@
     "neilbrayfield.php-docblocker",
     "onecentlin.laravel-extension-pack",
     "octref.vetur"
-  ]
+  ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
@@ -55,5 +55,5 @@
   // "postCreateCommand": "apt-get update && apt-get install -y git",
 
   // Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-  // "remoteUser": "vscode"
+  "remoteUser": "www-data"
 }

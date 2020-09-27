@@ -1,3 +1,5 @@
 .idea/
-.vscode/
+.ssh/
+.vscode-server/
 .phpunit.result.cache
+.gitconfig

@@ -1,8 +1,12 @@
 FROM php:apache-buster
 
+ARG USERNAME=www-data
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    && apt-get install -y libzip-dev libicu-dev unzip git nodejs \
+    && apt-get install -y sudo libzip-dev libicu-dev unzip git nodejs \
     # clean up
     && apt-get autoremove -y \
     && apt-get clean -y
@@ -32,5 +36,12 @@ RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
 
 # -- npm --
 RUN curl -L https://www.npmjs.com/install.sh | bash
+
+# [Optional] Update a non-root user to UID/GID if needed.
+RUN groupmod --gid $USER_GID $USERNAME \
+    && usermod --uid $USER_UID --gid $USER_GID $USERNAME --home /home/$USERNAME --move-home --shell /bin/bash \
+    && chown -R $USER_UID:$USER_GID /home/$USERNAME \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
 
 EXPOSE 80 9000
