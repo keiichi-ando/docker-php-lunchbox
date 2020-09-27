@@ -15,7 +15,16 @@
                         <!-- Navigation Links -->
                         <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                             <jet-nav-link href="/dashboard" :active="$page.currentRouteName == 'dashboard'">
-                                Dashboard
+                                Dashboard (report)
+                            </jet-nav-link>
+                            <jet-nav-link href="/users" :active="$page.currentRouteName == 'users.index'">
+                                User List
+                            </jet-nav-link>
+                            <jet-nav-link href="/register" :active="$page.currentRouteName == 'register'">
+                                User Add
+                            </jet-nav-link>
+                            <jet-nav-link href="/order" :active="$page.currentRouteName == 'order.index'">
+                                Lunch Menu
                             </jet-nav-link>
                         </div>
                     </div>
@@ -167,7 +176,7 @@
                             </div>
 
                             <template v-for="team in $page.user.all_teams">
-                                <form @submit.prevent="switchToTeam(team)">
+                                <form @submit.prevent="switchToTeam(team)" :key="team.id">
                                     <jet-responsive-nav-link as="button">
                                         <div class="flex items-center">
                                             <svg v-if="team.id == $page.user.current_team_id" class="mr-2 h-5 w-5 text-green-400" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

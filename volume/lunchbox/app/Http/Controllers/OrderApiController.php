@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
-class OrderController extends Controller
+class OrderApiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,23 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Order/Index');
+        $g = new \DateTime();
+        foreach (range(0, 27) as $i) {
+            $g->setISODate(date('Y'), date('W'), $i);
+            $date[] = $g->format('Y-m-d');
+        }
+        $array[0] = array_slice($date, 0, 7); //1週目
+        $array[1] = array_slice($date, 7, 7); // 2週目
+        $array[2] = array_slice($date, 14, 7); // 3週目
+        $array[3] = array_slice($date, 21); // 4週目
+
+        $cal = [];
+        foreach ($array as $key => $week) {
+            foreach ($week as $day) {
+                $cal[$key][] = ['date' => $day, 'ordered_menu' => '', 'can_change' => date('Y-m-d') < $day && \Auth::check() ? 'yes' : ''];
+            }
+        }
+        return ["name" => \Auth::check() ? \Auth::user()->name : "guest", "calendar"=> $cal, 'auth'=>\Auth::check()];
     }
 
     /**

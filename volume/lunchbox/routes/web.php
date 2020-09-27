@@ -17,12 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/users', 'App\Http\Controllers\UserController@index');
-
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia\Inertia::render('Dashboard');
 })->name('dashboard');
 
-Route::get('/lunch', function () {
-    return Inertia\Inertia::render('LunchMenu');
-})->name('lunchmenu');
+Route::resource('users', 'App\Http\Controllers\UserController', ['only'=>['index']]);
+Route::resource('order', 'App\Http\Controllers\OrderController', ['only'=>['index']]);
