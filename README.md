@@ -28,7 +28,7 @@ chown -R www-data:www-data database
 
 - [Laravel でログイン機能を実装する](https://qiita.com/ucan-lab/items/bd0d6f6449602072cb87)
 - [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-login/)
-- [Laravel（API）でCookieを使ったセッション管理を有効にする](https://deha.co.jp/magazine/admin-laravel-nuxt-cookie-auth/#Cookie)
+- [Laravel（API）で Cookie を使ったセッション管理を有効にする](https://deha.co.jp/magazine/admin-laravel-nuxt-cookie-auth/#Cookie)
 - [Laravel でユーザー認証されている時のユーザー情報の値のとり方や、判定する関数など - memocarilog](https://memocarilog.info/php-mysql/8749)
 
 ```bash: DB migrate time error No.1
@@ -87,3 +87,49 @@ mix.setPublicPath('public_html/'); // 追加
 ## api
 
 -　カレンダー４週分配列追加 [2020 年 9 月 6 日から 2020 年 9 月 12 日まで](http://www.jpn.week-numbers.com/37%E5%B9%B4%E7%AC%AC2020%E9%80%B1.html)
+
+## Model と DB
+
+1. Model クラスとマイグレーションファイルを作成
+
+```bash
+php artisan make:model Item --migration
+```
+
+2. マイグレーション実行
+
+```bash
+php artisan migrate
+```
+
+3. ダミーデータ(seed)準備 、ファクトリクラスを作成
+
+```bash
+php artisan make:factory ItemFactory
+```
+
+4. ファクトリクラスに `faker`等を使ってデータ投入できるようにする
+
+[faker チートシート - Qiita](https://qiita.com/tosite0345/items/1d47961947a6770053af)
+
+5. database\seeders\DatabaseSeeder.php に追加
+
+```php
+Item::factory(10)->create(); // 10件作成
+```
+
+6. seed 実行
+
+```bash
+php artisan db:seed
+```
+
+---
+
+DB マイグレーション再実行と、データリフレッシュして seed まで
+
+```bash
+php artisan migrate:refresh --seed
+```
+
+[Database seeding - Laravel docs 8.x](https://laravel.com/docs/8.x/seeding)
