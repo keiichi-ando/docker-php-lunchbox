@@ -2,8 +2,19 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Lunch menu for : {{ name }}
+        Lunch menu for : {{ user_name }}
       </h2>
+      <div>
+        <button
+          type="button"
+          :class="buttonClass(plan.id)"
+          v-for="plan in plans"
+          :key="plan.id"
+          v-on:click="test(plan.id)"
+        >
+          {{ plan.name }}
+        </button>
+      </div>
     </template>
     <div class="py-12">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -23,12 +34,12 @@
             <tbody>
               <tr v-for="(week, index) in calendar" :key="index">
                 <td v-for="day in week" :key="day.date">
-                  {{ day.date | shortdate }}
+                  {{ formatShortDate(day.date) }}
                   <div class="img_container">
-                    <a :href="day.date | imagesrc">
+                    <a :href="imagesrc(day.date)">
                       <img
                         class="img-thumbnail img"
-                        :src="day.date | imagesrc"
+                        :src="imagesrc(day.date)"
                         @error="replaceByDefault"
                       />
                       <div
@@ -40,7 +51,7 @@
                           img_text_overlay_hover: imghover == day.date,
                         }"
                       >
-                        <span v-show="name != 'guest'">済</span>
+                        <span v-show="user_name != 'guest'">済</span>
                       </div>
                     </a>
                   </div>
@@ -61,7 +72,6 @@
             {{ message }}
           </div>
         </span>
-        <input class="btn btn-info" type="button" v-on:click="test()" />ボタン
       </div>
     </div>
   </app-layout>
@@ -73,22 +83,7 @@ import AppLayout from "../../Layouts/AppLayout";
 export default {
   async mounted() {
     this.clearMessages();
-
-    await window.axios
-      .get("/api/order")
-      .then((res) => {
-        console.log(res.data);
-        if ("error" in res.data) {
-          this.setErrMessages(res.error);
-          return;
-        }
-        this.name = res.data.name;
-        this.calendar = res.data.calendar;
-      })
-      .catch((err) => {
-        console.log(err);
-        this.setErrMessages(err.message);
-      });
+    await this.getPersonalOrders();
   },
   methods: {
     replaceByDefault(e) {
@@ -103,39 +98,38 @@ export default {
     clearMessages() {
       this.messages = { info: [], err: [] };
     },
+    getPersonalOrders() {
+      window.axios
+        .get("/api/order")
+        .then((res) => {
+          console.log(res.data);
+          if ("error" in res.data) {
+            this.setErrMessages(res.error);
+            return;
+          }
+          this.calendar = res.data.calendar;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setErrMessages(err.message);
+        });
+    },
+    buttonClass: function (id) {
+      if (id == this.active_plan_id) {
+        return "btn btn-primary mr-3";
+      }
+      return "btn btn-outline-secondary mr-3";
+    },
+    formatShortDate: function (value) {
+      if (!value) return "";
+      value = value.toString();
+      return value.substr(5);
+    },
     imgcon(v) {
       if (v) {
         return "";
       }
       return "imgcontainer";
-    },
-
-    test() {
-      console.log("call test");
-      window.axios
-        .get("/api/user")
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          this.setErrMessages(err);
-        });
-    },
-  },
-  data() {
-    return {
-      name: "",
-      calendar: [],
-      imgobj: { fallbacksrc: "/assets/images/fallback.jpg" },
-      imghover: "",
-      messages: { info: [], err: [] },
-    };
-  },
-  filters: {
-    shortdate: function (value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.substr(5);
     },
     imagesrc: function (value) {
       if (!value) return "";
@@ -147,11 +141,43 @@ export default {
 
       mm = ("0" + mm).slice(-2);
       dd = ("0" + dd).slice(-2);
-      return "/assets/images/" + mm + dd + ".png";
+      return "/assets/images/" + this.active_plan_id + "/" + mm + dd + ".png";
+    },
+    test() {
+      console.log("call test");
+      this.active_plan_id = this.active_plan_id == 1 ? 2 : 1;
+      this.getPersonalOrders();
+      //   window.axios
+      //     .get("/api/user")
+      //     .then((res) => {
+      //       console.log(res);
+      //     })
+      //     .catch((err) => {
+      //       this.setErrMessages(err);
+      //     });
     },
   },
+  data() {
+    return {
+      calendar: [],
+      imgobj: { fallbacksrc: "/assets/images/fallback.jpg" },
+      imghover: "",
+      messages: { info: [], err: [] },
+      active_plan_id: 1,
+    };
+  },
+
+  filters: {},
   components: {
     AppLayout,
+  },
+  props: {
+    user_name: {
+      type: String,
+    },
+    plans: {
+      type: Array,
+    },
   },
 };
 </script>
