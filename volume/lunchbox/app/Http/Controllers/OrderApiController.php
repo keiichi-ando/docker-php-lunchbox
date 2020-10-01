@@ -29,7 +29,7 @@ class OrderApiController extends Controller
                 $cal[$key][] = ['date' => $day, 'ordered_menu' => '', 'can_change' => date('Y-m-d') < $day && \Auth::check() ? 'yes' : ''];
             }
         }
-        return ["name" => \Auth::check() ? \Auth::user()->name : "guest", "calendar"=> $cal, 'auth'=>\Auth::check()];
+        return ["calendar"=> $cal, 'auth'=>\Auth::check()];
     }
 
     /**
