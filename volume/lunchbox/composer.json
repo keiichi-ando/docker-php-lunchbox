@@ -64,5 +64,11 @@
         "test":[
             "vendor/bin/phpunit --colors=always --testdox"
         ]
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.jp"
+        }
     }
 }
