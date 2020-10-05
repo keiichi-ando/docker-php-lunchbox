@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 
 class OrderApiController extends Controller
 {
@@ -23,13 +24,15 @@ class OrderApiController extends Controller
         $array[2] = array_slice($date, 14, 7); // 3週目
         $array[3] = array_slice($date, 21); // 4週目
 
+        $orders = Order::select(['id','plan_id','target_date'])->where('user_id', \Auth::user()->id)->where('target_date', '>=', $array[0][0])->orderBy('target_date')->get()->keyBy('target_date')->toArray();
+
         $cal = [];
         foreach ($array as $key => $week) {
             foreach ($week as $day) {
-                $cal[$key][] = ['date' => $day, 'ordered_menu' => '', 'can_change' => date('Y-m-d') < $day && \Auth::check() ? 'yes' : ''];
+                $cal[$key][] = ['date' => $day, 'ordered_id' => $orders[$day]['id'] ?? '', 'ordered_plan_id' => $orders[$day]['plan_id'] ?? '', 'can_change' => date('Y-m-d') < $day && \Auth::check()];
             }
         }
-        return ["calendar"=> $cal, 'auth'=>\Auth::check()];
+        return ['calendar'=> $cal, 'auth'=>\Auth::check()];
     }
 
     /**

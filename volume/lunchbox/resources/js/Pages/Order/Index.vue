@@ -36,10 +36,10 @@
                 <td v-for="day in week" :key="day.date">
                   {{ formatShortDate(day.date) }}
                   <div class="img_container">
-                    <a :href="imagesrc(day.date)">
+                    <a :href="imagesrc(day.date, day.ordered_plan_id)">
                       <img
                         class="img-thumbnail img"
-                        :src="imagesrc(day.date)"
+                        :src="imagesrc(day.date, day.ordered_plan_id)"
                         @error="replaceByDefault"
                       />
                       <div
@@ -131,8 +131,11 @@ export default {
       }
       return "imgcontainer";
     },
-    imagesrc: function (value) {
+    imagesrc: function (value, ordered_plan_id) {
       if (!value) return "";
+
+      var plan_id = this.active_plan_id
+      if (ordered_plan_id) plan_id = ordered_plan_id
       var date = new Date(value);
       if (date == NaN) return "";
 
@@ -141,7 +144,7 @@ export default {
 
       mm = ("0" + mm).slice(-2);
       dd = ("0" + dd).slice(-2);
-      return "/assets/images/" + this.active_plan_id + "/" + mm + dd + ".png";
+      return "/assets/images/" + plan_id + "/" + mm + dd + ".png";
     },
     test() {
       console.log("call test");
