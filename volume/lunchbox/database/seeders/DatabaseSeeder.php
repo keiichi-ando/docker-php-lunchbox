@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
     {
         User::factory(30)->create();
         Plan::factory(2)->create();
-        Order::factory(260)->create();
+        Order::factory(360)->create();
     }
 }
