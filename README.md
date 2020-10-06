@@ -133,3 +133,26 @@ php artisan migrate:refresh --seed
 ```
 
 [Database seeding - Laravel docs 8.x](https://laravel.com/docs/8.x/seeding)
+
+## imagemagick
+
+PDF から png 化して分割
+
+```bash
+# pdf to png
+pdftoppm -png 2020.10月ランチメニュー.pdf > i2010-10.png
+
+# png crop and split (normal plan)
+convert -crop 1290x1210+48+260 i2020-10.png i20-normal.png && \
+convert -crop 20%x20% -page +0+0 i20-normal.png img.png
+
+# png crop (special plan)
+convert -crop 1048x160+378+1550 i2020-10.png i20-sp1.png && \
+convert -crop 20%x100% -page +0+0 i20-sp1.png img.png
+
+convert -crop 1035x170+385+1787 i2020-10.png i20-sp2.png && \
+convert -crop 20%x100% -page +0+0 i20-sp2.png img.png
+
+# resize (pattern)
+mogrify -resize 210x160 *.png
+```
