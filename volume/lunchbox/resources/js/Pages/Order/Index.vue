@@ -82,9 +82,29 @@
   import AppLayout from '../../Layouts/AppLayout';
 
   export default {
+    components: {
+      AppLayout,
+    },
+    props: {
+      user_name: {
+        type: String,
+      },
+      plans: {
+        type: Array,
+      },
+    },
     async mounted() {
       this.clearMessages();
       await this.getPersonalOrders();
+    },
+    data() {
+      return {
+        calendar: [],
+        imgobj: { fallbacksrc: '/assets/images/fallback.jpg' },
+        imghover: '',
+        messages: { info: [], err: [] },
+        active_plan_id: 1,
+      };
     },
     methods: {
       replaceByDefault(e) {
@@ -159,28 +179,6 @@
         //     .catch((err) => {
         //       this.setErrMessages(err);
         //     });
-      },
-    },
-    data() {
-      return {
-        calendar: [],
-        imgobj: { fallbacksrc: '/assets/images/fallback.jpg' },
-        imghover: '',
-        messages: { info: [], err: [] },
-        active_plan_id: 1,
-      };
-    },
-
-    filters: {},
-    components: {
-      AppLayout,
-    },
-    props: {
-      user_name: {
-        type: String,
-      },
-      plans: {
-        type: Array,
       },
     },
   };
