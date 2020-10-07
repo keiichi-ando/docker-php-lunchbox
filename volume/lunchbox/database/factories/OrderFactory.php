@@ -25,7 +25,9 @@ class OrderFactory extends Factory
         $g = new \DateTime();
         foreach (range(-7, 21) as $i) {
             $g->setISODate(date('Y'), date('W'), $i);
-            $dates[] = $g->format('Y-m-d');
+            if (!in_array($g->format('w'), [0,6])) {
+                $dates[] = $g->format('Y-m-d');
+            }
         }
         $user_ids = DB::table('users')->pluck('id');
         $plan_ids = DB::table('plans')->pluck('id');
