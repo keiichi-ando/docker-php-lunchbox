@@ -55,7 +55,7 @@
             <div v-for="im in cropImages" :key="im.uid">
               <div class="imageContainer">
                 <img :src="im.src" class="mt-3" alt="Cropped Image" />
-                <input class="ml-3 mt-3" type="text" :id="im.uid" placeholder="日付 (mmdd)" />
+                <input class="ml-3 mt-6 pt-3" type="text" :id="im.uid" placeholder="日付 (mmdd)" />
               </div>
             </div>
             <a href="#" role="button" @click.prevent="updateOrderPlan">
