@@ -26,7 +26,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Order/ImageProc', ["user_name" => \Auth::check() ? \Auth::user()->name : "guest"]);
+        return Inertia::render('Order/ImageProc', ["user_name" => \Auth::check() ? \Auth::user()->name : "guest", 'plans'=>Plan::all()]);
     }
 
     /**

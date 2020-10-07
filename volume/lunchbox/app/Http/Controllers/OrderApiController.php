@@ -54,6 +54,9 @@ class OrderApiController extends Controller
     public function store(Request $request)
     {
         //
+        \Log::debug(json_encode([$request->input('name'), $request->input('data')]));
+        return ['message'=>'success']; //
+
     }
 
     /**

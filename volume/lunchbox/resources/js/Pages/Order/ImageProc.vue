@@ -25,10 +25,10 @@
           </div>
 
           <div class="actions">
-            横<input type="text" v-model="divHorizontal" /> x 縦<input
-              type="text"
-              v-model="divVertical"
-            />
+            <span>横</span>
+            <input type="text" v-model="divHorizontal" />
+            <span> x 縦</span>
+            <input type="text" v-model="divVertical" />
             <a href="#" role="button" @click.prevent="cropImage"> Crop </a>
             <!-- <a href="#" role="button" @click.prevent="getData"> Get Data </a>
             <a href="#" role="button" @click.prevent="setData"> Set Data </a>
@@ -52,15 +52,31 @@
               alt="Cropped Image"
             />
             <div v-else class="crop-placeholder" />
-            <div v-for="im in cropImages" :key="im.uid">
+            <div v-for="(im, index) in cropImages" :key="im.uid">
               <div class="imageContainer">
-                <img :src="im.src" class="mt-3" alt="Cropped Image" />
-                <input class="ml-3 mt-6 pt-3" type="text" :id="im.uid" placeholder="日付 (mmdd)" />
+                <img
+                  :src="im.src"
+                  class="regist-target-img mt-3"
+                  :id="registId('rgi-', index)"
+                  alt="Cropped Image"
+                />
+                <input
+                  class="regist-target ml-3 mt-6 pt-3"
+                  type="text"
+                  :id="registId('rg-', index)"
+                  placeholder="日付 (mmdd)"
+                />
               </div>
             </div>
-            <a href="#" role="button" @click.prevent="updateOrderPlan">
-              Upload Plan data
-            </a>
+            <div class="actions upload">
+              <select v-model="selectedPlan">
+                <option disabled value="">メニューを選択</option>
+                <option v-for="plan in plans" :key="plan.id">{{ plan.name }}</option>
+              </select>
+              <a href="#" role="button" @click.prevent="updateOrderPlan">
+                Upload Plan data
+              </a>
+            </div>
           </div>
         </section>
       </div>
@@ -78,6 +94,14 @@
       AppLayout,
       VueCropper,
     },
+    props: {
+      user_name: {
+        type: String,
+      },
+      plans: {
+        type: Array,
+      },
+    },
     data() {
       return {
         imgSrc: '/assets/images/fallback.png',
@@ -85,6 +109,7 @@
         cropImages: [],
         divHorizontal: 5,
         divVertical: 5,
+        selectedPlan: null,
         data: null,
       };
     },
@@ -96,6 +121,7 @@
         // get image data for post processing, e.g. upload or setting image src
         this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
         this.cropImages = [];
+        this.selectedPlan = null;
       },
       splitImages() {
         if (!this.cropImg) return;
@@ -125,8 +151,52 @@
           }
         }
       },
-      updateOrderPlan() {
-        alert('under construction');
+      registId(pre, v) {
+        return pre + v;
+      },
+      async updateOrderPlan() {
+        if (this.selectedPlan == null) {
+          alert('メニューを選択してください');
+          return;
+        }
+        const elems = document.getElementsByClassName('regist-target');
+        var imgelm = null;
+        var formData = new FormData();
+        formData.append('planid', this.selectedPlan);
+        var targets = [];
+        var cnt = 0;
+        for (var i = 0; i < elems.length; i++) {
+          if (elems[i].value != '') {
+            targets.splice(cnt, 1, { id: elems[i].id, value: elems[i].value });
+            var imgelem = document.getElementById(elems[i].id.replace('rg-', 'rgi-'));
+            formData.append('img[' + cnt + ']', imgelem.src);
+            cnt++;
+          }
+        }
+        //const targets = elems.filter(target => targets.value !== '')
+        console.log('targets', targets);
+        console.log('formdata', formData);
+        if (targets.length == 0) {
+          alert('登録対象がありません');
+          return;
+        }
+        await window.axios
+          .post('/api/order', formData)
+          .then(res => {
+            console.log(res.data);
+            if ('error' in res.data) {
+              this.setErrMessages(res.error);
+              return;
+            }
+            alert('post success');
+            return;
+          })
+          .catch(err => {
+            console.log(err);
+            this.setErrMessages(err.message);
+          });
+
+        alert('under construction !!' + this.selectedPlan);
       },
       getCropBoxData() {
         this.data = JSON.stringify(this.$refs.cropper.getCropBoxData(), null, 4);
@@ -165,9 +235,6 @@
       },
       showFileChooser() {
         this.$refs.input.click();
-      },
-      zoom(percent) {
-        this.$refs.cropper.relativeZoom(percent);
       },
     },
   };
@@ -251,14 +318,14 @@
     background: #ccc;
   }
   .cropped-image img {
-    max-width: 100%;
+    max-width: 80%;
   }
   .imageContainer {
     display: flex;
     align-items: flex-start;
   }
   .imageContainer input {
-    height: 1.5rem;
+    height: 1.7rem;
     border-radius: 3px;
   }
 </style>
