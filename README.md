@@ -146,6 +146,11 @@ php artisan migrate:refresh --seed
 
 [Database seeding - Laravel docs 8.x](https://laravel.com/docs/8.x/seeding)
 
+## vue multi images upload
+
+- [Laravel Vue.jsで画像をアップロード DB保存までの流れ](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
+- [【Vue.js】ファイルアップロード（複数ファイル）の渡し方（axios）](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
+
 ## imagemagick
 
 PDF から png 化して分割
