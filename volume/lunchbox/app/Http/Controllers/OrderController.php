@@ -15,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        \Log::debug(Plan::all());
+        // \Log::debug(Plan::all());
         return Inertia::render('Order/Index', ["user_name" => \Auth::check() ? \Auth::user()->name : "guest", 'plans'=>Plan::all()]);
     }
 
@@ -26,7 +26,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Order/ImageProc', ["user_name" => \Auth::check() ? \Auth::user()->name : "guest"]);
     }
 
     /**

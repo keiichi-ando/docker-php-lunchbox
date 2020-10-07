@@ -22,4 +22,4 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('users', 'App\Http\Controllers\UserController', ['only'=>['index']]);
-Route::resource('order', 'App\Http\Controllers\OrderController', ['only'=>['index']]);
+Route::resource('order', 'App\Http\Controllers\OrderController', ['only'=>['index','create']]);
