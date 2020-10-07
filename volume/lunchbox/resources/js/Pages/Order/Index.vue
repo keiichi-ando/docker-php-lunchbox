@@ -51,7 +51,7 @@
                           img_text_overlay_hover: imghover == day.date,
                         }"
                       >
-                        <span v-show="day.ordered_plan_id != ''" style="color: red;">予約</span>
+                        <span v-show="day.ordered_plan_id != ''" style="color: red">予約</span>
                         <span v-show="user_name != 'guest'">済</span>
                       </div>
                     </a>
@@ -79,129 +79,132 @@
 </template>
 
 <script>
-import AppLayout from "../../Layouts/AppLayout";
+  import AppLayout from '../../Layouts/AppLayout';
 
-export default {
-  async mounted() {
-    this.clearMessages();
-    await this.getPersonalOrders();
-  },
-  methods: {
-    replaceByDefault(e) {
-      return (e.target.src = "/assets/images/fallback.png");
+  export default {
+    async mounted() {
+      this.clearMessages();
+      await this.getPersonalOrders();
     },
-    setErrMessages(msg) {
-      this.messages.err.push(msg);
-    },
-    setMessages(msg) {
-      this.messages.info.push(msg);
-    },
-    clearMessages() {
-      this.messages = { info: [], err: [] };
-    },
-    getPersonalOrders() {
-      window.axios
-        .get("/api/order")
-        .then((res) => {
-          console.log(res.data);
-          if ("error" in res.data) {
-            this.setErrMessages(res.error);
-            return;
-          }
-          this.calendar = res.data.calendar;
-        })
-        .catch((err) => {
-          console.log(err);
-          this.setErrMessages(err.message);
-        });
-    },
-    buttonClass: function (id) {
-      if (id == this.active_plan_id) {
-        return "btn btn-primary mr-3";
-      }
-      return "btn btn-outline-secondary mr-3";
-    },
-    formatShortDate: function (value) {
-      if (!value) return "";
-      value = value.toString();
-      return value.substr(5);
-    },
-    imgcon(v) {
-      if (v) {
-        return "";
-      }
-      return "imgcontainer";
-    },
-    imagesrc: function (value, ordered_plan_id) {
-      if (!value) return "";
+    methods: {
+      replaceByDefault(e) {
+        return (e.target.src = '/assets/images/fallback.png');
+      },
+      setErrMessages(msg) {
+        this.messages.err.push(msg);
+      },
+      setMessages(msg) {
+        this.messages.info.push(msg);
+      },
+      clearMessages() {
+        this.messages = { info: [], err: [] };
+      },
+      getPersonalOrders() {
+        window.axios
+          .get('/api/order')
+          .then(res => {
+            console.log(res.data);
+            if ('error' in res.data) {
+              this.setErrMessages(res.error);
+              return;
+            }
+            this.calendar = res.data.calendar;
+          })
+          .catch(err => {
+            console.log(err);
+            this.setErrMessages(err.message);
+          });
+      },
+      buttonClass: function(id) {
+        if (id == this.active_plan_id) {
+          return 'btn btn-primary mr-3';
+        }
+        return 'btn btn-outline-secondary mr-3';
+      },
+      formatShortDate: function(value) {
+        if (!value) return '';
+        value = value.toString();
+        return value.substr(5);
+      },
+      imgcon(v) {
+        if (v) {
+          return '';
+        }
+        return 'imgcontainer';
+      },
+      imagesrc: function(value, ordered_plan_id) {
+        if (!value) return '';
 
-      var plan_id = this.active_plan_id
-      if (ordered_plan_id) plan_id = ordered_plan_id
-      var date = new Date(value);
-      if (date == NaN) return "";
+        var plan_id = this.active_plan_id;
+        if (ordered_plan_id) plan_id = ordered_plan_id;
+        var date = new Date(value);
+        if (date == NaN) return '';
 
-      var mm = date.getMonth() + 1;
-      var dd = date.getDate();
+        var mm = date.getMonth() + 1;
+        var dd = date.getDate();
 
-      mm = ("0" + mm).slice(-2);
-      dd = ("0" + dd).slice(-2);
-      return "/assets/images/" + plan_id + "/" + mm + dd + ".png";
+        mm = ('0' + mm).slice(-2);
+        dd = ('0' + dd).slice(-2);
+        return '/assets/images/' + plan_id + '/' + mm + dd + '.png';
+      },
+      test() {
+        console.log('call test');
+        this.active_plan_id = this.active_plan_id == 1 ? 2 : 1;
+        this.getPersonalOrders();
+        //   window.axios
+        //     .get("/api/user")
+        //     .then((res) => {
+        //       console.log(res);
+        //     })
+        //     .catch((err) => {
+        //       this.setErrMessages(err);
+        //     });
+      },
     },
-    test() {
-      console.log("call test");
-      this.active_plan_id = this.active_plan_id == 1 ? 2 : 1;
-      this.getPersonalOrders();
-      //   window.axios
-      //     .get("/api/user")
-      //     .then((res) => {
-      //       console.log(res);
-      //     })
-      //     .catch((err) => {
-      //       this.setErrMessages(err);
-      //     });
+    data() {
+      return {
+        calendar: [],
+        imgobj: { fallbacksrc: '/assets/images/fallback.jpg' },
+        imghover: '',
+        messages: { info: [], err: [] },
+        active_plan_id: 1,
+      };
     },
-  },
-  data() {
-    return {
-      calendar: [],
-      imgobj: { fallbacksrc: "/assets/images/fallback.jpg" },
-      imghover: "",
-      messages: { info: [], err: [] },
-      active_plan_id: 1,
-    };
-  },
 
-  filters: {},
-  components: {
-    AppLayout,
-  },
-  props: {
-    user_name: {
-      type: String,
+    filters: {},
+    components: {
+      AppLayout,
     },
-    plans: {
-      type: Array,
+    props: {
+      user_name: {
+        type: String,
+      },
+      plans: {
+        type: Array,
+      },
     },
-  },
-};
+  };
 </script>
 <style scoped>
-.img_container {
-  position: relative;
-  text-align: center;
-}
-.img {
-  width: 100%;
-}
-.img_text_overlay {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  top: 0;
-  bottom: 0;
-}
-.img_text_overlay_hover {
-  opacity: 0.5;
-}
+  td {
+    padding: 0.3rem;
+  }
+  .img_container {
+    position: relative;
+    text-align: center;
+  }
+  .img {
+    width: 100%;
+  }
+  .img_text_overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 0;
+    bottom: 0;
+  }
+  .img_text_overlay_hover {
+    opacity: 0.5;
+  }
 </style>
