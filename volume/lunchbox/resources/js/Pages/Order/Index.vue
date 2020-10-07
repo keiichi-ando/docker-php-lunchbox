@@ -43,7 +43,7 @@
                         @error="replaceByDefault"
                       />
                       <div
-                        v-show="day.can_change == ''"
+                        v-show="day.can_change == false || day.ordered_plan_id != ''"
                         class="img_text_overlay"
                         @mouseover="imghover = day.date"
                         @mouseleave="imghover = ''"
@@ -51,6 +51,7 @@
                           img_text_overlay_hover: imghover == day.date,
                         }"
                       >
+                        <span v-show="day.ordered_plan_id != ''" style="color: red;">予約</span>
                         <span v-show="user_name != 'guest'">済</span>
                       </div>
                     </a>
