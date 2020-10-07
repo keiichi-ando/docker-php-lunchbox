@@ -24,6 +24,18 @@ chown -R www-data:www-data database
 - タイムゾーンを変更: 'timezone' => 'UTC' -> 'timezone' => 'Asia/Tokyo'
 - ロケール変更: 'locale' => 'en' -> 'locale' => 'ja'
 
+### git clone
+
+docker を起動後
+
+```bash
+composer update
+npm install
+vi .env
+php artisan key:generate
+php artisan migrate --seed # for develop only
+```
+
 ## ログイン (auth) 追加、加工
 
 - [Laravel でログイン機能を実装する](https://qiita.com/ucan-lab/items/bd0d6f6449602072cb87)
