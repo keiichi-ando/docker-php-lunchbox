@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Order;
+use App\Models\Plan;
 
 class OrderApiController extends Controller
 {
@@ -54,9 +56,17 @@ class OrderApiController extends Controller
     public function store(Request $request)
     {
         //
-        \Log::debug(json_encode([$request->input('name'), $request->input('data')]));
-        return ['message'=>'success']; //
+        \Log::debug(\Auth::user()->name .','. json_encode([$request->input('planid'), $request->input('img')], JSON_UNESCAPED_UNICODE));
 
+        $images = $request->input('img');
+        // 画像保存
+        foreach ($images as $img) {
+            @list($type, $src) = explode(';', $img['src']);
+            @list(, $src) = explode(',', $src);
+            $filename = $request->input('planid') . '/' . $img['id'] . '.' . 'png';
+            Storage::disk('public_images')->put($filename, base64_decode($src));
+        }
+        return ['message'=>'success']; //
     }
 
     /**

@@ -71,7 +71,7 @@
             <div class="actions upload">
               <select v-model="selectedPlan">
                 <option disabled value="">メニューを選択</option>
-                <option v-for="plan in plans" :key="plan.id">{{ plan.name }}</option>
+                <option v-for="(plan) in plans" :key="plan.id" :value="plan.id">{{ plan.name }}</option>
               </select>
               <a href="#" role="button" @click.prevent="updateOrderPlan">
                 Upload Plan data
@@ -80,6 +80,18 @@
           </div>
         </section>
       </div>
+    </div>
+    <div class="row">
+      <span v-show="!messages.err[0] == ''" class="alert alert-warning">
+        <div v-for="(message, index) in messages.err" :key="index">
+          {{ message }}
+        </div>
+      </span>
+      <span v-show="!messages.info[0] == ''" class="alert alert-info">
+        <div v-for="(message, index) in messages.info" :key="index">
+          {{ message }}
+        </div>
+      </span>
     </div>
   </app-layout>
 </template>
@@ -109,6 +121,7 @@
         cropImages: [],
         divHorizontal: 5,
         divVertical: 5,
+        messages: { info: [], err: [] },
         selectedPlan: null,
         data: null,
       };
@@ -117,6 +130,15 @@
       // this.$refs.cropper('aspectRatioo', NaN)
     },
     methods: {
+      setErrMessages(msg) {
+        this.messages.err.push(msg);
+      },
+      setMessages(msg) {
+        this.messages.info.push(msg);
+      },
+      clearMessages() {
+        this.messages = { info: [], err: [] };
+      },
       cropImage() {
         // get image data for post processing, e.g. upload or setting image src
         this.cropImg = this.$refs.cropper.getCroppedCanvas().toDataURL();
@@ -159,43 +181,42 @@
           alert('メニューを選択してください');
           return;
         }
+        const headers = { headers: { 'Content-Type': 'application/json' } };
         const elems = document.getElementsByClassName('regist-target');
         var imgelm = null;
-        var formData = new FormData();
-        formData.append('planid', this.selectedPlan);
+        var postVal = { planid: this.selectedPlan, img: [] };
+        console.log(this.selectedPlan, this.selectedPlan.value)
+
         var targets = [];
         var cnt = 0;
         for (var i = 0; i < elems.length; i++) {
           if (elems[i].value != '') {
             targets.splice(cnt, 1, { id: elems[i].id, value: elems[i].value });
             var imgelem = document.getElementById(elems[i].id.replace('rg-', 'rgi-'));
-            formData.append('img[' + cnt + ']', imgelem.src);
+            postVal.img[cnt] = { id: elems[i].value, src: imgelem.src };
             cnt++;
           }
         }
-        //const targets = elems.filter(target => targets.value !== '')
-        console.log('targets', targets);
-        console.log('formdata', formData);
         if (targets.length == 0) {
           alert('登録対象がありません');
           return;
         }
         await window.axios
-          .post('/api/order', formData)
+          .post('/api/order', JSON.stringify(postVal), headers)
           .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             if ('error' in res.data) {
               this.setErrMessages(res.error);
               return;
             }
             alert('post success');
-            return;
           })
           .catch(err => {
             console.log(err);
             this.setErrMessages(err.message);
           });
 
+        return;
         alert('under construction !!' + this.selectedPlan);
       },
       getCropBoxData() {
