@@ -148,8 +148,9 @@ php artisan migrate:refresh --seed
 
 ## vue multi images upload
 
-- [Laravel Vue.jsで画像をアップロード DB保存までの流れ](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
+- [Laravel Vue.js で画像をアップロード DB 保存までの流れ](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
 - [【Vue.js】ファイルアップロード（複数ファイル）の渡し方（axios）](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
+- [Laravel ファイルストレージ：base64 イメージを保存（デコード）する方法？ - it-swarm-ja.tech](https://www.it-swarm-ja.tech/ja/php/laravel%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%EF%BC%9Abase64%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%82%92%E4%BF%9D%E5%AD%98%EF%BC%88%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%89%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%EF%BC%9F/805988561/)
 
 ## imagemagick
 
@@ -173,3 +174,7 @@ convert -crop 20%x100% -page +0+0 i20-sp2.png -scene 1 img%02d.png
 # resize (pattern)
 mogrify -resize 210x160 *.png
 ```
+
+## 課題
+
+[Vue.js で Form の各要素を Component 化する際の覚え書き - Qiita](https://qiita.com/ryo2132/items/2e3fcedaffeff9fc3967)
