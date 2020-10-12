@@ -69,10 +69,7 @@
               </div>
             </div>
             <div class="actions upload">
-              <select v-model="selectedPlan">
-                <option disabled value="">メニューを選択</option>
-                <option v-for="(plan) in plans" :key="plan.id" :value="plan.id">{{ plan.name }}</option>
-              </select>
+                <ImageProcSelect v-model="selectedPlan" :options="plans"></ImageProcSelect>
               <a href="#" role="button" @click.prevent="updateOrderPlan">
                 Upload Plan data
               </a>
@@ -100,11 +97,13 @@
   import AppLayout from '../../Layouts/AppLayout';
   import VueCropper from 'vue-cropperjs';
   import 'cropperjs/dist/cropper.css';
+  import ImageProcSelect from './ImageProcSelect';
 
   export default {
     components: {
       AppLayout,
       VueCropper,
+      ImageProcSelect,
     },
     props: {
       user_name: {
@@ -127,7 +126,7 @@
       };
     },
     mounted() {
-      // this.$refs.cropper('aspectRatioo', NaN)
+      //
     },
     methods: {
       setErrMessages(msg) {
@@ -185,7 +184,7 @@
         const elems = document.getElementsByClassName('regist-target');
         var imgelm = null;
         var postVal = { planid: this.selectedPlan, img: [] };
-        console.log(this.selectedPlan, this.selectedPlan.value)
+        console.log(this.selectedPlan, this.selectedPlan.value);
 
         var targets = [];
         var cnt = 0;

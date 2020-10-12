@@ -1,9 +1,10 @@
 <template>
   <fieldset>
-    <select :name="name" @change="updateValue">
-      <template v-for="(option, index) in options">
-        <option :value="option.value" :key="index">
-          {{ option.label }}
+    <select @change="updateValue">
+      <option disabled selected value="">メニューを選択</option>
+      <template v-for="(plan, index) in options">
+        <option :value="plan.id" :key="index">
+          {{ plan.name }}
         </option>
       </template>
     </select>
@@ -12,11 +13,9 @@
 
 <script>
   export default {
-    name: 'MySelect',
+    name: 'ImageProcSelect',
     props: {
-      value: { type: String, required: true },
       options: { type: Array, required: true },
-      name: { type: String, required: true },
     },
     methods: {
       updateValue: function(e) {
