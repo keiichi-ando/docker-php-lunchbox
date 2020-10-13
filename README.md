@@ -42,6 +42,8 @@ php artisan migrate --seed # for develop only
 - [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-login/)
 - [Laravel（API）で Cookie を使ったセッション管理を有効にする](https://deha.co.jp/magazine/admin-laravel-nuxt-cookie-auth/#Cookie)
 - [Laravel でユーザー認証されている時のユーザー情報の値のとり方や、判定する関数など - memocarilog](https://memocarilog.info/php-mysql/8749)
+- [Laravel6 でマルチ認証を実装する （User と Admin の階層を分ける） - Qiita](https://qiita.com/namizatork/items/5d56d96d4c255a0e3a87)
+- [【Laravel】マルチログイン（ユーザーと管理者）機能 - Qiita](https://qiita.com/tkek321/items/1e8fa58e548017d244fd)
 
 ```bash: DB migrate time error No.1
 
