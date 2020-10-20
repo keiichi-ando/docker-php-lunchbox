@@ -42,6 +42,14 @@ php artisan migrate --seed # for develop only
 - [Laravel 入門 #7 ログイン機能とカスタマイズ方法](https://knowledge.cpi.ad.jp/howto-cpi/laravel-login/)
 - [Laravel（API）で Cookie を使ったセッション管理を有効にする](https://deha.co.jp/magazine/admin-laravel-nuxt-cookie-auth/#Cookie)
 - [Laravel でユーザー認証されている時のユーザー情報の値のとり方や、判定する関数など - memocarilog](https://memocarilog.info/php-mysql/8749)
+- [Laravel8 Fortify で認証機能の動作確認 - REFEECT](https://reffect.co.jp/laravel/laravel8-fortify%e3%81%a7%e8%aa%8d%e8%a8%bc%e6%a9%9f%e8%83%bd%e3%81%ae%e5%8b%95%e4%bd%9c%e7%a2%ba%e8%aa%8d)
+
+以下未読
+
+- [Version8 redirects - laracasts](https://laracasts.com/discuss/channels/laravel/version-8-redirects)
+- [Laravel の Gate(ゲート)機能で権限(ロール)によるアクセス制限を実装する](https://www.ritolab.com/entry/56)
+- [Laravel Jetstream #Teams - laravel.com](https://jetstream.laravel.com/1.x/features/teams.html)
+- [Jetstreamチーム版でユーザーの役割と権限を簡単に設定する Laravel8 - ](https://biz.addisteria.com/jetstream_teams/)
 
 ```bash: DB migrate time error No.1
 
@@ -146,13 +154,17 @@ php artisan migrate:refresh --seed
 
 [Database seeding - Laravel docs 8.x](https://laravel.com/docs/8.x/seeding)
 
-## vue multi images upload
+---
+
+## ランチ画像登録機能
+
+### vue multi images upload
 
 - [Laravel Vue.js で画像をアップロード DB 保存までの流れ](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
 - [【Vue.js】ファイルアップロード（複数ファイル）の渡し方（axios）](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
 - [Laravel ファイルストレージ：base64 イメージを保存（デコード）する方法？ - it-swarm-ja.tech](https://www.it-swarm-ja.tech/ja/php/laravel%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%EF%BC%9Abase64%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%82%92%E4%BF%9D%E5%AD%98%EF%BC%88%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%89%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%EF%BC%9F/805988561/)
 
-## imagemagick
+### imagemagick version
 
 PDF から png 化して分割
 
