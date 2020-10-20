@@ -23,8 +23,9 @@ class PlanFactory extends Factory
     {
         $names = ['極ランチ','通常ランチ'];
         // $names = ['松花堂弁当','ランチパック','極ランチ','通常ランチ'];
-        return [ 'name'=> $this->faker->unique()->randomElement($names),
-             'reserve_limit_h'=> $this->faker->numberBetween($min = 1, $max = 14),
+        return [
+            'name'=> $this->faker->unique()->randomElement($names),
+            'reserve_limit_h'=> $this->faker->numberBetween($min = 1, $max = 14),
             //
         ];
     }
