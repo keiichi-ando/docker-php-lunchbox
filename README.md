@@ -49,7 +49,7 @@ php artisan migrate --seed # for develop only
 - [Version8 redirects - laracasts](https://laracasts.com/discuss/channels/laravel/version-8-redirects)
 - [Laravel の Gate(ゲート)機能で権限(ロール)によるアクセス制限を実装する](https://www.ritolab.com/entry/56)
 - [Laravel Jetstream #Teams - laravel.com](https://jetstream.laravel.com/1.x/features/teams.html)
-- [Jetstreamチーム版でユーザーの役割と権限を簡単に設定する Laravel8 - ](https://biz.addisteria.com/jetstream_teams/)
+- [Jetstream チーム版でユーザーの役割と権限を簡単に設定する Laravel8](https://biz.addisteria.com/jetstream_teams/)
 
 ```bash: DB migrate time error No.1
 
