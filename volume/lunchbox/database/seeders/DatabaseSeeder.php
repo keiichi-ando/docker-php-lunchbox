@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Admin;
-use App\Models\Plan;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Database\Seeder;
@@ -17,9 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Admin::factory(1)->create();
-        User::factory(30)->create();
-        Plan::factory(2)->create();
-        Order::factory(360)->create();
+        $this->call(PlansSeeder::class);
+        $this->call(DefaultTeamsSeeder::class);
+        if (app()->isLocal()) {
+            // Admin::factory(1)->create();
+            User::factory(30)->create();
+            Order::factory(360)->create();
+        }
     }
 }
