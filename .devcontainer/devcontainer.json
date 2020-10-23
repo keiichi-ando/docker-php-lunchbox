@@ -22,11 +22,47 @@
     "[php]": {
       "editor.defaultFormatter": "junstyle.php-cs-fixer"
     },
+    "intelephense.diagnostics.undefinedTypes": false,
+    "intelephense.diagnostics.undefinedMethods": false,
+
+    "php.suggest.basic": false,
+    "php.validate.enable": false,
+
     "php-cs-fixer.executablePath": "/usr/local/bin/php-cs-fixer",
     "php-cs-fixer.rules": "@PSR2",
     "php-cs-fixer.config": ".php-cs.dist",
-    "php-cs-fixer.formathtml": true,
-    "php-cs-fixer.onsave": false
+    "php-cs-fixer.allowRisky": false,
+    "php-cs-fixer.pathMode": "override",
+    "php-cs-fixer.formatHtml": true,
+    "php-cs-fixer.onsave": false,
+    "php-cs-fixer.autoFixBySemicolon": true,
+    "php-cs-fixer.autoFixByBracket": true,
+    "php-cs-fixer.documentFormattingProvider": true,
+    "php-docblocker.qualifyClassNames": true,
+    "php-docblocker.classTemplate": {
+      "extra": {
+        "content": [
+          "Description of ${1:ClassName}\n",
+          "\n",
+          "@author ${2:{{name}}}"
+        ]
+      }
+    },
+    "php-docblocker.functionTemplate": {
+      "message": { "gapAfter": true },
+      "param": { "gapBefore": true },
+      "return": {},
+      "extra": {}
+    },
+    "emmet.triggerExpansionOnTab": true, // enable tab to expanse emmet tags
+    "blade.format.enable": true,
+    "[blade]": {
+      "editor.defaultFormatter": "amirmarmul.laravel-blade-vscode",
+      "editor.autoClosingBrackets": "always"
+    },
+    "files.associations": {
+      ".php-cs.dist": "php"
+    }
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -38,7 +74,10 @@
     "firefox-devtool.vscode-firefox-debug",
     "junstyle.php-cs-fixer",
     "neilbrayfield.php-docblocker",
-    "onecentlin.laravel-extension-pack",
+    "onecentlin.laravel-blade",
+    "amirmarmul.laravel-blade-vscode",
+    // "apility.beautify-blade",
+    // "onecentlin.laravel-extension-pack",
     "octref.vetur"
   ],
 
