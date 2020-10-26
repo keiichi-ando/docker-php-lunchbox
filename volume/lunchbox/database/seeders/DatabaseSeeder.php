@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             // Admin::factory(1)->create();
             User::factory(30)->create();
             Order::factory(360)->create();
+            $this->call(UserTeamsSeeder::class);
         }
     }
 }
