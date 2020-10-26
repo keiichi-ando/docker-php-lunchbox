@@ -17,8 +17,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia\Inertia::render('Dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function (Request $request) {
+    $team = auth()->user()->currentTeam;
+    // \Log::debug(auth()->user()->teamRole($team));
+    if ($team->name === '管理者') {
+        return Inertia\Inertia::render('Dashboard');
+    }
+    return redirect('order');
 })->name('dashboard');
 
 Route::resource('users', 'App\Http\Controllers\UserController', ['only'=>['index']]);
