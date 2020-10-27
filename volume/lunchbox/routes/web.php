@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,9 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function (Request $request) {
-    $team = auth()->user()->currentTeam;
-    // \Log::debug(auth()->user()->teamRole($team));
-    if ($team->name === '管理者') {
+    $team = $request->user()->currentTeam;
+    
+    if ($request->user()->hasTeamPermission($team, 'member:regist')){
         return Inertia\Inertia::render('Dashboard');
     }
     return redirect('order');
