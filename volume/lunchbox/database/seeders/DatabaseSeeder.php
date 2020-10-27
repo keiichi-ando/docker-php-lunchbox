@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             // Admin::factory(1)->create();
             User::factory(30)->create();
             Order::factory(360)->create();
-            $this->call(UserTeamsSeeder::class);
+            // $this->call(UserTeamsSeeder::class);
         }
     }
 }
