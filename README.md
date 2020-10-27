@@ -43,13 +43,25 @@ php artisan migrate --seed # for develop only
 - [Laravel（API）で Cookie を使ったセッション管理を有効にする](https://deha.co.jp/magazine/admin-laravel-nuxt-cookie-auth/#Cookie)
 - [Laravel でユーザー認証されている時のユーザー情報の値のとり方や、判定する関数など - memocarilog](https://memocarilog.info/php-mysql/8749)
 - [Laravel8 Fortify で認証機能の動作確認 - REFEECT](https://reffect.co.jp/laravel/laravel8-fortify%e3%81%a7%e8%aa%8d%e8%a8%bc%e6%a9%9f%e8%83%bd%e3%81%ae%e5%8b%95%e4%bd%9c%e7%a2%ba%e8%aa%8d)
+- [Jetstream チーム版でユーザーの役割と権限を簡単に設定する Laravel8](https://biz.addisteria.com/jetstream_teams/)
+- [Teams | Laravel Jetstream 1.x](https://jetstream.laravel.com/1.x/features/teams.html#inspecting-user-teams)
 
 以下未読
 
-- [Version8 redirects - laracasts](https://laracasts.com/discuss/channels/laravel/version-8-redirects)
 - [Laravel の Gate(ゲート)機能で権限(ロール)によるアクセス制限を実装する](https://www.ritolab.com/entry/56)
 - [Laravel Jetstream #Teams - laravel.com](https://jetstream.laravel.com/1.x/features/teams.html)
-- [Jetstream チーム版でユーザーの役割と権限を簡単に設定する Laravel8](https://biz.addisteria.com/jetstream_teams/)
+
+### admin と user 分け
+
+- teams 機能を使用して実装。
+- teams->user_id が owner の user_id となる (user.id == team.user_id で ownedteam) (Laravel\Jetstream\HasTeams 参照、App\Model\User 内の trait )
+- team owner の場合は、role 指定しなくとも全許可 (user()->hasTeamPermission()が常に true になる、Role 指定してもしなくても 同じ動き)
+- Jeatstream::role (JetStreamProvider 内) を指定するときは Member テーブルにて user_id, role を指定
+- JetStreamProvider 内へ role を追加、引数１つ目は role 名 (admin)、２つ目は TeamSetting 画面に表示される名前 (Administrator) description はその下に表示されるコメント
+
+### Vue.js で User を使う
+
+Laravel\Jetstream\Http\Middleware\ShareInertiaData にて $page.jetstream, $page.user が使用できるようになっている。 (使用方法は resource/js/Layouts/AppLayout.vue 参照)
 
 ```bash: DB migrate time error No.1
 
@@ -76,8 +88,6 @@ laravel-mix
 - [Laravel7 から Vue.js を使う最短レシピ - Qiita](https://qiita.com/fruitriin/items/118c773b045101db7651)
 - 未 [Laravel 6 API と Vue.js で SPA 構築 最速入門](https://noumenon-th.net/programming/2020/02/13/laravel-vue-spa/)
 - 未 [laravel で vue.js , axios を使う](https://qiita.com/ma7ma7pipipi/items/d58b1a8114f122bf918d)
-- 未 [Vue-cropper.js で画像トリミング機能実装](https://www.koatech.info/blog/vue-cropper-js-intro/)
-- 未 [vue-cropper で画像のトリミングをする - だいそんブログ](https://dkdk0125.work/vue-cropper%E3%81%A7%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%88%E3%83%AA%E3%83%9F%E3%83%B3%E3%82%B0%E3%82%92%E3%81%99%E3%82%8B/)
 - 未 [Vue + axios で Laravel にユーザー認証する（ダウンロード可）- CONSOLE DOT LOG](https://blog.capilano-fw.com/?p=3458)
 
 - 未[【Laravel 6 & PHP 7.4 対応】Vue + Vue Router + Vuex + Laravel チュートリアル（全 16 回）を書きました。- Qiita](https://qiita.com/MasahiroHarada/items/2597bd6973a45f92e1e8)
@@ -163,6 +173,8 @@ php artisan migrate:refresh --seed
 - [Laravel Vue.js で画像をアップロード DB 保存までの流れ](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
 - [【Vue.js】ファイルアップロード（複数ファイル）の渡し方（axios）](http://salary.katsulabo.com/%E3%80%90vue-js%E3%80%91%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%A2%E3%83%83%E3%83%97%E3%83%AD%E3%83%BC%E3%83%89%EF%BC%88%E8%A4%87%E6%95%B0%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%EF%BC%89%E3%81%AE/)
 - [Laravel ファイルストレージ：base64 イメージを保存（デコード）する方法？ - it-swarm-ja.tech](https://www.it-swarm-ja.tech/ja/php/laravel%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%B9%E3%83%88%E3%83%AC%E3%83%BC%E3%82%B8%EF%BC%9Abase64%E3%82%A4%E3%83%A1%E3%83%BC%E3%82%B8%E3%82%92%E4%BF%9D%E5%AD%98%EF%BC%88%E3%83%87%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%89%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%EF%BC%9F/805988561/)
+- [Vue-cropper.js で画像トリミング機能実装](https://www.koatech.info/blog/vue-cropper-js-intro/)
+- [vue-cropper で画像のトリミングをする - だいそんブログ](https://dkdk0125.work/vue-cropper%E3%81%A7%E7%94%BB%E5%83%8F%E3%81%AE%E3%83%88%E3%83%AA%E3%83%9F%E3%83%B3%E3%82%B0%E3%82%92%E3%81%99%E3%82%8B/)
 
 ### imagemagick version
 
