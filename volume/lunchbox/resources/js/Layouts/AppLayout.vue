@@ -58,20 +58,40 @@
 
                                     <!-- Team Management -->
                                     <template v-if="$page.jetstream.hasTeamFeatures">
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            Manage Team
-                                        </div>
+                                        <template v-if="$page.user.id == $page.user.current_team.user_id">
+                                            @if (Route::has('register'))
+                                                <div class="block px-4 py-2 text-xs text-gray-400">
+                                                    Member Add
+                                                </div>
+                                                <a href="{{ route('register') }}">Register</a>
+                                                <div class="border-t border-gray-100"></div>
+                                            @endif
 
-                                        <!-- Team Settings -->
-                                        <jet-dropdown-link :href="route('teams.show', $page.user.current_team)">
-                                            Team Settings
-                                        </jet-dropdown-link>
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                Orders
+                                            </div>
+                                            <!-- Menu editor view -->
+                                            <jet-dropdown-link :href="route('order.create', $page.user.current_team)">
+                                                Menu Edit
+                                            </jet-dropdown-link>
 
-                                        <jet-dropdown-link :href="route('teams.create')" v-if="$page.jetstream.canCreateTeams">
-                                            Create New Team
-                                        </jet-dropdown-link>
+                                            <div class="border-t border-gray-100"></div>
 
-                                        <div class="border-t border-gray-100"></div>
+                                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                                Manage Team
+                                            </div>
+
+                                            <!-- Team Settings -->
+                                            <jet-dropdown-link :href="route('teams.show', $page.user.current_team)">
+                                                Team Settings
+                                            </jet-dropdown-link>
+
+                                            <jet-dropdown-link :href="route('teams.create')" v-if="$page.jetstream.canCreateTeams">
+                                                Create New Team
+                                            </jet-dropdown-link>
+
+                                            <div class="border-t border-gray-100"></div>
+                                        </template>
 
                                         <!-- Team Switcher -->
                                         <div class="block px-4 py-2 text-xs text-gray-400">
