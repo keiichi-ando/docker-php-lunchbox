@@ -18,4 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('order', 'App\Http\Controllers\OrderApiController', ['only'=>['index','show','store']]);
+Route::group(['as' => 'api.'], function () {
+    Route::resource('order', 'App\Http\Controllers\OrderApiController', ['only' => ['index', 'show', 'store']]);
+});
