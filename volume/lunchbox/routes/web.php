@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
+    return view('entrance');
+});
+
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
