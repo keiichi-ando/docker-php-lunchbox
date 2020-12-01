@@ -2,19 +2,30 @@ version: '3.1'
 
 services: 
   php:
-    build: ./web
+    container_name: lunchbox-web
+    build: 
+      context: ./web
+      args:
+        USER_UID: 1000
+        USER_GID: 1000
     ports: 
       - 8000:80
     environment: 
       TZ: Asia/Tokyo
     volumes: 
       - ./volume:/var/www
+      - ./web/apache2/ports.conf:/etc/apache2/ports.conf:ro
+      - ./web/apache2/000-default.conf:/etc/apache2/sites-available/000-default.conf:ro
+      - ./web/php/php.ini:/usr/local/etc/php/php.ini:ro
+      - ./web/xdebug/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini:ro
+    working_dir: /var/www/lunchbox
     tty: true
 
   db:
+    container_name: lunchbox-db
     image: mariadb:latest
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - ./db/mariadb/:/etc/mysql/conf.d
       - ./db/init/:/docker-entrypoint-initdb.d

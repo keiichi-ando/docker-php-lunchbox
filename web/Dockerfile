@@ -1,8 +1,8 @@
 FROM php:apache-buster
 
-ARG USERNAME=www-data
+ARG USER_NAME="www-data"
 ARG USER_UID=1000
-ARG USER_GID=$USER_UID
+ARG USER_GID=1000
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -13,19 +13,17 @@ RUN apt-get update \
 # && rm -rf /var/lib/apt/lists/*
 
 # -- Apache config --
-COPY ./apache2/ports.conf /etc/apache2/
-COPY ./apache2/000-default.conf /etc/apache2/sites-available/
+# COPY ./apache2/ports.conf /etc/apache2/
+# COPY ./apache2/000-default.conf /etc/apache2/sites-available/
 RUN a2enmod headers \
     && a2enmod rewrite \
-    && usermod -u 1000 www-data \
-    && groupmod -g 1000 www-data \
     && echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf \
     && a2enconf fqdn \
     && apachectl start
 
 # -- PHP --
-COPY ./php/php.ini /usr/local/etc/php/
-COPY ./xdebug/xdebug.ini /usr/local/etc/php/conf.d/
+# COPY ./php/php.ini /usr/local/etc/php/
+# COPY ./xdebug/xdebug.ini /usr/local/etc/php/conf.d/
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer \
@@ -37,11 +35,12 @@ RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o php-cs-fixer
 # -- npm --
 RUN curl -L https://www.npmjs.com/install.sh | bash
 
-# [Optional] Update a non-root user to UID/GID if needed.
-RUN groupmod --gid $USER_GID $USERNAME \
-    && usermod --uid $USER_UID --gid $USER_GID $USERNAME --home /home/$USERNAME --move-home --shell /bin/bash \
-    && chown -R $USER_UID:$USER_GID /home/$USERNAME \
-    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
-    && chmod 0440 /etc/sudoers.d/$USERNAME
+# volume owner
+RUN echo -e "\e[32m OWNER ${USER_GID}:${USER_GID} ${USER_NAME} \e[m" \
+    && groupmod --gid ${USER_GID} ${USER_NAME} \
+    && usermod --uid ${USER_UID} --gid ${USER_GID} ${USER_NAME} --home /home/${USER_NAME} --move-home --shell /bin/bash \
+    && chown -R ${USER_UID}:${USER_GID} /home/${USER_NAME} \
+    && echo "${USER_NAME} ALL=(root) NOPASSWD:ALL" > /etc/sudoers.d/${USER_NAME} \
+    && chmod 0440 /etc/sudoers.d/${USER_NAME}
 
 EXPOSE 80 9000
