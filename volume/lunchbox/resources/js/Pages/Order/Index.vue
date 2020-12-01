@@ -79,130 +79,130 @@
 </template>
 
 <script>
-  import AppLayout from '../../Layouts/AppLayout';
+import AppLayout from '../../Layouts/AppLayout';
 
-  export default {
-    components: {
-      AppLayout,
+export default {
+  components: {
+    AppLayout,
+  },
+  props: {
+    user_name: {
+      type: String,
     },
-    props: {
-      user_name: {
-        type: String,
-      },
-      plans: {
-        type: Array,
-      },
+    plans: {
+      type: Array,
     },
-    async mounted() {
-      this.clearMessages();
-      await this.getPersonalOrders();
+  },
+  async mounted() {
+    this.clearMessages();
+    await this.getPersonalOrders();
+  },
+  data() {
+    return {
+      calendar: [],
+      imgobj: { fallbacksrc: '/assets/images/fallback.jpg' },
+      imghover: '',
+      messages: { info: [], err: [] },
+      active_plan_id: 1,
+    };
+  },
+  methods: {
+    replaceByDefault(e) {
+      return (e.target.src = '/assets/images/fallback.png');
     },
-    data() {
-      return {
-        calendar: [],
-        imgobj: { fallbacksrc: '/assets/images/fallback.jpg' },
-        imghover: '',
-        messages: { info: [], err: [] },
-        active_plan_id: 1,
-      };
+    setErrMessages(msg) {
+      this.messages.err.push(msg);
     },
-    methods: {
-      replaceByDefault(e) {
-        return (e.target.src = '/assets/images/fallback.png');
-      },
-      setErrMessages(msg) {
-        this.messages.err.push(msg);
-      },
-      setMessages(msg) {
-        this.messages.info.push(msg);
-      },
-      clearMessages() {
-        this.messages = { info: [], err: [] };
-      },
-      getPersonalOrders() {
-        window.axios
-          .get('/api/order')
-          .then(res => {
-            console.log(res.data);
-            if ('error' in res.data) {
-              this.setErrMessages(res.error);
-              return;
-            }
-            this.calendar = res.data.calendar;
-          })
-          .catch(err => {
-            console.log(err);
-            this.setErrMessages(err.message);
-          });
-      },
-      buttonClass: function(id) {
-        if (id == this.active_plan_id) {
-          return 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
-        }
-        return 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded';
-      },
-      formatShortDate: function(value) {
-        if (!value) return '';
-        value = value.toString();
-        return value.substr(5);
-      },
-      imgcon(v) {
-        if (v) {
-          return '';
-        }
-        return 'imgcontainer';
-      },
-      imagesrc: function(value, ordered_plan_id) {
-        if (!value) return '';
+    setMessages(msg) {
+      this.messages.info.push(msg);
+    },
+    clearMessages() {
+      this.messages = { info: [], err: [] };
+    },
+    getPersonalOrders() {
+      window.axios
+        .get('/api/order')
+        .then((res) => {
+          console.log(res.data);
+          if ('error' in res.data) {
+            this.setErrMessages(res.error);
+            return;
+          }
+          this.calendar = res.data.calendar;
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setErrMessages(err.message);
+        });
+    },
+    buttonClass: function (id) {
+      if (id == this.active_plan_id) {
+        return 'bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded';
+      }
+      return 'bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded';
+    },
+    formatShortDate: function (value) {
+      if (!value) return '';
+      value = value.toString();
+      return value.substr(5);
+    },
+    imgcon(v) {
+      if (v) {
+        return '';
+      }
+      return 'imgcontainer';
+    },
+    imagesrc: function (value, ordered_plan_id) {
+      if (!value) return '';
 
-        var plan_id = this.active_plan_id;
-        if (ordered_plan_id) plan_id = ordered_plan_id;
-        var date = new Date(value);
-        if (date == NaN) return '';
+      var plan_id = this.active_plan_id;
+      if (ordered_plan_id) plan_id = ordered_plan_id;
+      var date = new Date(value);
+      if (date == NaN) return '';
 
-        var mm = date.getMonth() + 1;
-        var dd = date.getDate();
+      var mm = date.getMonth() + 1;
+      var dd = date.getDate();
 
-        mm = ('0' + mm).slice(-2);
-        dd = ('0' + dd).slice(-2);
-        return '/assets/images/' + plan_id + '/' + mm + dd + '.png';
-      },
-      test() {
-        console.log('call test');
-        this.active_plan_id = this.active_plan_id == 1 ? 2 : 1;
-        this.getPersonalOrders();
-        //   window.axios
-        //     .get("/api/user")
-        //     .then((res) => {
-        //       console.log(res);
-        //     })
-        //     .catch((err) => {
-        //       this.setErrMessages(err);
-        //     });
-      },
+      mm = ('0' + mm).slice(-2);
+      dd = ('0' + dd).slice(-2);
+      return '/assets/images/' + plan_id + '/' + mm + dd + '.png';
     },
-  };
+    test() {
+      console.log('call test');
+      this.active_plan_id = this.active_plan_id == 1 ? 2 : 1;
+      this.getPersonalOrders();
+      //   window.axios
+      //     .get("/api/user")
+      //     .then((res) => {
+      //       console.log(res);
+      //     })
+      //     .catch((err) => {
+      //       this.setErrMessages(err);
+      //     });
+    },
+  },
+};
 </script>
 <style scoped>
-  td {
-    padding: 0rem;
-  }
-  .img_container {
-    position: relative;
-    text-align: center;
-  }
-  .img {
-    width: 100%;
-  }
-  .img_text_overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
-    top: 0;
-    bottom: 0;
-  }
-  .img_text_overlay_hover {
-    opacity: 0.5;
-  }
+td {
+  padding: 0rem;
+}
+.img_container {
+  position: relative;
+  text-align: center;
+}
+.img {
+  width: 100%;
+}
+.img_text_overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  top: 0;
+  bottom: 0;
+}
+.img_text_overlay_hover {
+  opacity: 0.5;
+}
 </style>
