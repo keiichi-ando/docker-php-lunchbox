@@ -6,7 +6,6 @@
         <a href="https://github.com/Agontuk/vue-cropperjs">Github</a>
       </div>
     </template>
-
     <input ref="input" type="file" name="image" accept="image/*" @change="setImage" />
     <div class="py-12 content">
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -55,14 +54,20 @@
             <div v-for="(im, index) in cropImages" :key="im.uid">
               <div class="imageContainer">
                 <img
-                  :src="im.src"
                   class="regist-target-img mt-3"
+                  :src="im.src"
                   :id="registId('rgi-', index)"
                   alt="Cropped Image"
                 />
-                <flat-pickr :config="config" class="regist-target ml-3 mt-6 pt-3">
+                <flat-pickr
+                  class="regist-target ml-3 mt-6 pt-3"
+                  name="orderdate"
+                  placeholder="日付を指定 (m/dd)"
+                  :config="config"
                   :id="registId('rg-', index)"
-                  @on-change="onChangeDate(index)"
+                  v-model="date[index]"
+                  @on-change="onChangeDate"
+                >
                 </flat-pickr>
               </div>
             </div>
@@ -124,7 +129,7 @@ export default {
       messages: { info: [], err: [] },
       selectedPlan: null,
       data: null,
-      date: null,
+      date: [],
       config: {
         dateFormat: 'md',
         monthSelectorType: 'static',
@@ -179,10 +184,24 @@ export default {
       }
     },
     registId(pre, v) {
-      return pre + v;
+      return pre + ('00' + v).slice(-2);
     },
-    onChangeDate(id){
-        console.log(document.getElementById("rg-" + id))
+    select(dt) {
+      this.$set(this.date, dt, '');
+    },
+    /**
+     * 指定箇所以降の日付を +1で再セット
+     */
+    onChangeDate(selectedDates, dateStr, instance) {
+      var dt = selectedDates[0];
+      var id = parseInt(instance.element.id.replace('rg-', ''));
+      var max_id = document.getElementsByName('orderdate').length - 1;
+      console.log(selectedDates[0], dateStr, instance.element.id, id, max_id);
+      if (dateStr == '') return;
+
+      for (let i = id + 1; i <= max_id; i++) {
+        this.date[i] = dt.setDate(dt.getDate() + 1);
+      }
     },
     async updateOrderPlan() {
       if (this.selectedPlan == null) {
