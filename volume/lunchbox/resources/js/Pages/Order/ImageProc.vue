@@ -22,22 +22,12 @@
               drag-mode="move"
             />
           </div>
-
           <div class="actions">
             <span>横</span>
             <input type="text" v-model="divHorizontal" />
             <span> x 縦</span>
             <input type="text" v-model="divVertical" />
             <a href="#" role="button" @click.prevent="cropImage"> Crop </a>
-            <!-- <a href="#" role="button" @click.prevent="getData"> Get Data </a>
-            <a href="#" role="button" @click.prevent="setData"> Set Data </a>
-            <a href="#" role="button" @click.prevent="getCropBoxData">
-              Get CropBox Data
-            </a>
-            <a href="#" role="button" @click.prevent="setCropBoxData">
-              Set CropBox Data
-            </a> -->
-            <!-- <textarea v-model="data" /> -->
           </div>
         </section>
         <section class="preview-area">
@@ -51,28 +41,9 @@
               alt="Cropped Image"
             />
             <div v-else class="crop-placeholder" />
-            <div v-for="(im, index) in cropImages" :key="im.uid">
-              <div class="imageContainer">
-                <img
-                  class="regist-target-img mt-3"
-                  :src="im.src"
-                  :id="registId('rgi-', index)"
-                  alt="Cropped Image"
-                />
-                <flat-pickr
-                  class="regist-target ml-3 mt-6 pt-3"
-                  name="orderdate"
-                  placeholder="日付を指定 (m/dd)"
-                  :config="config"
-                  :id="registId('rg-', index)"
-                  v-model="date[index]"
-                  @on-change="onChangeDate"
-                >
-                </flat-pickr>
-              </div>
-            </div>
+            <image-proc-items v-bind:cropedItems="cropImages"></image-proc-items>
             <div class="actions upload">
-              <ImageProcSelect v-model="selectedPlan" :options="plans"></ImageProcSelect>
+              <image-proc-select v-model="selectedPlan" :options="plans"></image-proc-select>
               <a href="#" role="button" @click.prevent="updateOrderPlan"> Upload Plan data </a>
             </div>
           </div>
@@ -99,17 +70,15 @@ import AppLayout from '../../Layouts/AppLayout';
 import VueCropper from 'vue-cropperjs';
 import 'cropperjs/dist/cropper.css';
 import ImageProcSelect from './ImageProcSelect';
-import flatPickr from 'vue-flatpickr-component';
-import 'flatpickr/dist/flatpickr.css';
-import 'flatpickr/dist/themes/confetti.css';
-// import { localeJa } from 'flatpickr/dist/l10n/ja.js';
+import ImageProcItems from './ImageProcItems';
+// import MyDateInput from '../Components/MyDateInput';
 
 export default {
   components: {
     AppLayout,
     VueCropper,
-    ImageProcSelect,
-    flatPickr,
+    'image-proc-select': ImageProcSelect,
+    'image-proc-items': ImageProcItems,
   },
   props: {
     user_name: {
@@ -129,11 +98,6 @@ export default {
       messages: { info: [], err: [] },
       selectedPlan: null,
       data: null,
-      date: [],
-      config: {
-        dateFormat: 'md',
-        monthSelectorType: 'static',
-      },
     };
   },
   mounted() {
@@ -183,26 +147,6 @@ export default {
         }
       }
     },
-    registId(pre, v) {
-      return pre + ('00' + v).slice(-2);
-    },
-    select(dt) {
-      this.$set(this.date, dt, '');
-    },
-    /**
-     * 指定箇所以降の日付を +1で再セット
-     */
-    onChangeDate(selectedDates, dateStr, instance) {
-      var dt = selectedDates[0];
-      var id = parseInt(instance.element.id.replace('rg-', ''));
-      var max_id = document.getElementsByName('orderdate').length - 1;
-      console.log(selectedDates[0], dateStr, instance.element.id, id, max_id);
-      if (dateStr == '') return;
-
-      for (let i = id + 1; i <= max_id; i++) {
-        this.date[i] = dt.setDate(dt.getDate() + 1);
-      }
-    },
     async updateOrderPlan() {
       if (this.selectedPlan == null) {
         alert('メニューを選択してください');
@@ -244,7 +188,6 @@ export default {
         });
 
       return;
-      alert('under construction !!' + this.selectedPlan);
     },
     getCropBoxData() {
       this.data = JSON.stringify(this.$refs.cropper.getCropBoxData(), null, 4);
