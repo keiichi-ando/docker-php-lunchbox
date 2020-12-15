@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Models\Order;
 use App\Models\Plan;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OrderApiController extends Controller
 {
@@ -26,15 +26,16 @@ class OrderApiController extends Controller
         $array[2] = array_slice($date, 14, 7); // 3週目
         $array[3] = array_slice($date, 21); // 4週目
 
-        $orders = Order::select(['id','plan_id','target_date'])->where('user_id', \Auth::user()->id)->where('target_date', '>=', $array[0][0])->orderBy('target_date')->get()->keyBy('target_date')->toArray();
-
+        if (\Auth::check()) {
+            $orders = Order::select(['id', 'plan_id', 'target_date'])->where('user_id', \Auth::user()->id)->where('target_date', '>=', $array[0][0])->orderBy('target_date')->get()->keyBy('target_date')->toArray();
+        }
         $cal = [];
         foreach ($array as $key => $week) {
             foreach ($week as $day) {
                 $cal[$key][] = ['date' => $day, 'ordered_id' => $orders[$day]['id'] ?? '', 'ordered_plan_id' => $orders[$day]['plan_id'] ?? '', 'can_change' => date('Y-m-d') < $day && \Auth::check()];
             }
         }
-        return ['calendar'=> $cal, 'auth'=>\Auth::check()];
+        return ['calendar' => $cal, 'auth' => \Auth::check()];
     }
 
     /**
@@ -56,7 +57,7 @@ class OrderApiController extends Controller
     public function store(Request $request)
     {
         //
-        \Log::debug(\Auth::user()->name .','. json_encode([$request->input('planid'), $request->input('img')], JSON_UNESCAPED_UNICODE));
+        \Log::debug(\Auth::user()->name . ',' . json_encode([$request->input('planid'), $request->input('img')], JSON_UNESCAPED_UNICODE));
 
         $images = $request->input('img');
         // 画像保存
@@ -66,7 +67,7 @@ class OrderApiController extends Controller
             $filename = $request->input('planid') . '/' . $img['id'] . '.' . 'png';
             Storage::disk('public_images')->put($filename, base64_decode($src));
         }
-        return ['message'=>'success']; //
+        return ['message' => 'success']; //
     }
 
     /**
