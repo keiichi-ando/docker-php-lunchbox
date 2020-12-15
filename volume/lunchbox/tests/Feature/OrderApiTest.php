@@ -15,12 +15,13 @@ class OrderApiTest extends TestCase
      */
     public function test_ランチメニュー()
     {
-        $response = $this->json('GET', route('order.index'));
-
-        print(json_encode($response));
+        $response = $this->json('GET', route('api.order.index'));
 
         $this->assertEquals(date('Y-m-d'), $response['calendar'][0][date('w')]['date']);
+        $this->assertEquals(date('Y-m-d', strtotime('+1 week')), $response['calendar'][1][date('w')]['date']);
+        $this->assertEquals(date('Y-m-d', strtotime('+2 week')), $response['calendar'][2][date('w')]['date']);
+        $this->assertEquals(date('Y-m-d', strtotime('+3 week')), $response['calendar'][3][date('w')]['date']);
 
-        $response->assertStatus(200); //->assertJson(['calendar' => $response['calendar']]);
+        $response->assertStatus(200);
     }
 }
