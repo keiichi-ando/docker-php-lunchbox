@@ -22,13 +22,7 @@ class OrderFactory extends Factory
      */
     public function definition()
     {
-        $g = new \DateTime();
-        foreach (range(-7, 21) as $i) {
-            $g->setISODate(date('Y'), date('W'), $i);
-            if (!in_array($g->format('w'), [0,6])) {
-                $dates[] = $g->format('Y-m-d');
-            }
-        }
+        $dates = DB::table('orders_sheets')->pluck('orderdate');
         $user_ids = DB::table('users')->pluck('id');
         $plan_ids = DB::table('plans')->pluck('id');
 

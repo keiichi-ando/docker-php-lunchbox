@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrdersSheet;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -16,25 +17,25 @@ class OrderApiController extends Controller
      */
     public function index()
     {
-        $g = new \DateTime();
-        foreach (range(0, 27) as $i) {
-            $g->setISODate(date('Y'), date('W'), $i);
-            $date[] = $g->format('Y-m-d');
-        }
-        $array[0] = array_slice($date, 0, 7); //1週目
-        $array[1] = array_slice($date, 7, 7); // 2週目
-        $array[2] = array_slice($date, 14, 7); // 3週目
-        $array[3] = array_slice($date, 21); // 4週目
+        $od = new OrdersSheet();
+        $cal = $od->getCalendar();
+        // $cal = array_column($dates, 'orderdate', 'orderdate');
+
+        // $array[0] = array_slice($date, 0, 7); //1週目
+        // $array[1] = array_slice($date, 7, 7); // 2週目
+        // $array[2] = array_slice($date, 14, 7); // 3週目
+        // $array[3] = array_slice($date, 21); // 4週目
 
         if (\Auth::check()) {
-            $orders = Order::select(['id', 'plan_id', 'target_date'])->where('user_id', \Auth::user()->id)->where('target_date', '>=', $array[0][0])->orderBy('target_date')->get()->keyBy('target_date')->toArray();
+            $orders = Order::select(['id', 'plan_id', 'target_date'])->where('user_id', \Auth::user()->id)->whereDate('target_date', '>=', $cal[0])->orderBy('target_date')->get()->keyBy('target_date')->toArray();
+            array_merge($cal, $orders);
         }
-        $cal = [];
-        foreach ($array as $key => $week) {
-            foreach ($week as $day) {
-                $cal[$key][] = ['date' => $day, 'ordered_id' => $orders[$day]['id'] ?? '', 'ordered_plan_id' => $orders[$day]['plan_id'] ?? '', 'can_change' => date('Y-m-d') < $day && \Auth::check()];
-            }
-        }
+        // $cal = [];
+        // foreach ($array as $key => $week) {
+        //     foreach ($week as $day) {
+        //         $cal[$key][] = ['date' => $day, 'ordered_id' => $orders[$day]['id'] ?? '', 'ordered_plan_id' => $orders[$day]['plan_id'] ?? '', 'can_change' => date('Y-m-d') < $day && \Auth::check()];
+        //     }
+        // }
         return ['calendar' => $cal, 'auth' => \Auth::check()];
     }
 
